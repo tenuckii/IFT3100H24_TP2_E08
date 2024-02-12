@@ -1,0 +1,9 @@
+# vscode
+.vscode
+*.code-workspace
+
+# bin
+/bin
+
+# obj
+/obj
