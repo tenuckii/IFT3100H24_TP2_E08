@@ -1,71 +1,73 @@
-#include "ofApp.h"
+#include "application.h"
 
 //--------------------------------------------------------------
-void ofApp::setup(){
-
+void Application::setup()
+{
+    renderer.setup();
 }
 
 //--------------------------------------------------------------
-void ofApp::update(){
-
+void Application::update()
+{
 }
 
 //--------------------------------------------------------------
-void ofApp::draw(){
-
+void Application::draw()
+{
+    renderer.draw();
 }
 
 //--------------------------------------------------------------
-void ofApp::keyPressed(int key){
-
+void Application::keyPressed(int key)
+{
 }
 
 //--------------------------------------------------------------
-void ofApp::keyReleased(int key){
-
+void Application::keyReleased(int key)
+{
 }
 
 //--------------------------------------------------------------
-void ofApp::mouseMoved(int x, int y ){
-
+void Application::mouseMoved(int x, int y)
+{
 }
 
 //--------------------------------------------------------------
-void ofApp::mouseDragged(int x, int y, int button){
-
+void Application::mouseDragged(int x, int y, int button)
+{
 }
 
 //--------------------------------------------------------------
-void ofApp::mousePressed(int x, int y, int button){
-
+void Application::mousePressed(int x, int y, int button)
+{
 }
 
 //--------------------------------------------------------------
-void ofApp::mouseReleased(int x, int y, int button){
-
+void Application::mouseReleased(int x, int y, int button)
+{
 }
 
 //--------------------------------------------------------------
-void ofApp::mouseEntered(int x, int y){
-
+void Application::mouseEntered(int x, int y)
+{
 }
 
 //--------------------------------------------------------------
-void ofApp::mouseExited(int x, int y){
-
+void Application::mouseExited(int x, int y)
+{
 }
 
 //--------------------------------------------------------------
-void ofApp::windowResized(int w, int h){
-
+void Application::windowResized(int w, int h)
+{
 }
 
 //--------------------------------------------------------------
-void ofApp::gotMessage(ofMessage msg){
-
+void Application::gotMessage(ofMessage msg)
+{
 }
 
 //--------------------------------------------------------------
-void ofApp::dragEvent(ofDragInfo dragInfo){ 
-
+void Application::dragEvent(ofDragInfo dragInfo)
+{
 }
