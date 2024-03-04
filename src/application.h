@@ -1,8 +1,9 @@
 #pragma once
 
 #include "ofMain.h"
+#include "cursor.h"
 
-class ofApp : public ofBaseApp{
+class Application : public ofBaseApp{
 
 	public:
 		void setup();
@@ -20,5 +21,8 @@ class ofApp : public ofBaseApp{
 		void windowResized(int w, int h);
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
+
+    private:
+        Cursor cursor;
 		
 };
