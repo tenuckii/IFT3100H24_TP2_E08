@@ -33,21 +33,25 @@ void Application::mouseMoved(int x, int y ){
 
 //--------------------------------------------------------------
 void Application::mouseDragged(int x, int y, int button){
+    cursor.set_position(x,y);
 
 }
 
 //--------------------------------------------------------------
 void Application::mousePressed(int x, int y, int button){
+    cursor.set_position(x,y);
 
 }
 
 //--------------------------------------------------------------
 void Application::mouseReleased(int x, int y, int button){
+    cursor.set_position(x,y);
 
 }
 
 //--------------------------------------------------------------
 void Application::mouseEntered(int x, int y){
+    cursor.set_position(x,y);
 
 }
 
