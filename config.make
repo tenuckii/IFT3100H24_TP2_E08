@@ -8,7 +8,7 @@
 #   The location of your root openFrameworks installation
 #       (default) OF_ROOT = ../../.. 
 ################################################################################
-OF_ROOT = ../../..
+# OF_ROOT = ../../..
 
 ################################################################################
 # PROJECT ROOT
@@ -17,17 +17,6 @@ OF_ROOT = ../../..
 #    
 ################################################################################
 # PROJECT_ROOT = .
-
-################################################################################
-# PROJECT ICON
-#   This is the icon to be displayed for the application on Windows platform.
-#   You can set an icon for the release version and for the debug version of
-#   your application.
-#   If the debug icon is not defined, the release icon will be used.
-#   If none is set, the OF default icons (debug or release) will be used.
-#################################################################################
-# PROJECT_RELEASE_ICON = bin/app.ico
-# PROJECT_DEBUG_ICON = bin/app-debug.ico
 
 ################################################################################
 # PROJECT SPECIFIC CHECKS
@@ -81,12 +70,13 @@ OF_ROOT = ../../..
 #		(default) PROJECT_LDFLAGS = -Wl,-rpath=./libs
 #
 #   Note: Leave a leading space when adding list items with the += operator
-#
+################################################################################
+
 # Currently, shared libraries that are needed are copied to the 
 # $(PROJECT_ROOT)/bin/libs directory.  The following LDFLAGS tell the linker to
 # add a runtime path to search for those shared libraries, since they aren't 
 # incorporated directly into the final executable application binary.
-################################################################################
+# TODO: should this be a default setting?
 # PROJECT_LDFLAGS=-Wl,-rpath=./libs
 
 ################################################################################
