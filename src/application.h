@@ -7,6 +7,7 @@
 #include "drawingTool.h"
 
 #include "ImageExpImp.h"
+#include "interface.h"
 
 #include "Primitive3D.h"
 
