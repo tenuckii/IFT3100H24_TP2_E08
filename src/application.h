@@ -2,6 +2,8 @@
 
 #include "ofMain.h"
 #include "cursor.h"
+#include "ofxGui.h"
+#include "drawingTool.h"
 
 class Application : public ofBaseApp{
 
@@ -9,6 +11,7 @@ class Application : public ofBaseApp{
 		void setup();
 		void update();
 		void draw();
+		void exit();
 
 		void keyPressed(int key);
 		void keyReleased(int key);
@@ -24,5 +27,7 @@ class Application : public ofBaseApp{
 
     private:
         Cursor cursor;
+		DrawingTool drawingTool;
+		Renderer renderer;
 		
 };

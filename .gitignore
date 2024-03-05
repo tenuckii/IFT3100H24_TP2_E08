@@ -7,3 +7,11 @@
 
 # obj
 /obj
+
+*.make
+*.rc
+*.sln
+*.vcxproj
+*.vcxproj.*
+*.db*
+/.vs
