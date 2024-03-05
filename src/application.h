@@ -5,6 +5,7 @@
 #include "ofxGui.h"
 #include "drawingTool.h"
 #include "ImageExpImp.h"
+#include "interface.h"
 
 class Application : public ofBaseApp{
 

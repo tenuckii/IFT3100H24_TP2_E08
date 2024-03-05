@@ -6,6 +6,7 @@ void Application::setup(){
     drawingTool.setup();
     renderer.setup();
     imageExpImp.setup();
+    interface.setup(cursor);
 }
 
 //--------------------------------------------------------------

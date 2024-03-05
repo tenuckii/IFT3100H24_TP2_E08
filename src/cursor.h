@@ -8,6 +8,8 @@ public:
     void setup();
     void draw();
     void set_position(unsigned int x, unsigned int y);
+    void set_color(ofColor& _color);
+    ofColor& get_color();
 
 private:
     typedef enum CursorType
@@ -29,7 +31,7 @@ private:
     float gap;
     float length;
     unsigned int size;
-    unsigned int r,g,b;
+    ofColor color;
 
     void crosshair();
     void t_crosshair();
