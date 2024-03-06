@@ -4,10 +4,12 @@
 #include "cursor.h"
 #include "ofxGui.h"
 #include "drawingTool.h"
+#include "ImageExpImp.h"
 
 class Application : public ofBaseApp{
 
 	public:
+		ImageExpImp imageExpImp;
 		void setup();
 		void update();
 		void draw();
