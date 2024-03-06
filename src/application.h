@@ -2,10 +2,12 @@
 
 #include "ofMain.h"
 #include "cursor.h"
+#include "ImageExpImp.h"
 
 class Application : public ofBaseApp{
 
 	public:
+		ImageExpImp imageExpImp;
 		void setup();
 		void update();
 		void draw();
