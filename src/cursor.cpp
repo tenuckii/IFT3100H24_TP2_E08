@@ -2,7 +2,7 @@
 
 void Cursor::setup()
 {
-    position = {.x = 0, .y = 0};
+    position = {0, 0};
     cursor_type = CursorType::ROUND_CROSSHAIR;
     length = 5.0f;
     gap = 2.5f;
@@ -73,5 +73,5 @@ void Cursor::arrow_crosshair() {
 
 void Cursor::set_position(unsigned int x, unsigned int y)
 {
-    position = {.x = x, .y = y};
+    position = {x, y};
 }

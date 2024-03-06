@@ -2,6 +2,11 @@
 
 #include "ofMain.h"
 #include "cursor.h"
+<<<<<<< HEAD
+=======
+#include "ofxGui.h"
+#include "drawingTool.h"
+>>>>>>> fff29631ede41043027c57210c1be77d900d13b9
 #include "ImageExpImp.h"
 
 class Application : public ofBaseApp{
@@ -11,6 +16,7 @@ class Application : public ofBaseApp{
 		void setup();
 		void update();
 		void draw();
+		void exit();
 
 		void keyPressed(int key);
 		void keyReleased(int key);
@@ -26,5 +32,7 @@ class Application : public ofBaseApp{
 
     private:
         Cursor cursor;
+		DrawingTool drawingTool;
+		Renderer renderer;
 		
 };
