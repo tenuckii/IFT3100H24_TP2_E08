@@ -2,17 +2,22 @@
 
 #include "ofMain.h"
 #include "cursor.h"
-<<<<<<< HEAD
-=======
+
 #include "ofxGui.h"
 #include "drawingTool.h"
->>>>>>> fff29631ede41043027c57210c1be77d900d13b9
+
 #include "ImageExpImp.h"
+
+#include "Primitive3D.h"
+
 
 class Application : public ofBaseApp{
 
 	public:
 		ImageExpImp imageExpImp;
+
+		Geometrie geometrie3D;
+
 		void setup();
 		void update();
 		void draw();
@@ -29,6 +34,8 @@ class Application : public ofBaseApp{
 		void windowResized(int w, int h);
 		void dragEvent(ofDragInfo dragInfo);
 		void gotMessage(ofMessage msg);
+
+		int mode = 2;
 
     private:
         Cursor cursor;
