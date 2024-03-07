@@ -1,12 +1,11 @@
 #pragma once
 #include "ofMain.h"
 #include "ofxGui.h"
-#include "Cursor.h"
 
 class Interface
 {
 public:
-    void setup(Cursor& cursor);
+    void setup();
     void draw();
 
 private:
@@ -14,8 +13,8 @@ private:
 	// void circleResolutionChanged(int & circleResolution);
 	// void ringButtonPressed();
     ofxPanel gui;
-	bool bHide;
-    ofxColorSlider color;
+	// bool bHide;
+    // ofxColorSlider color;
     // ofxIntSlider crosshairCircleResolution;
 
     // unsigned int r,g,b,a;
