@@ -11,7 +11,7 @@ public:
     void exit();
     void set_position(unsigned int x, unsigned int y);
     void open_close_ui();
-    ofxPanel getUIComponent();
+    ofxBaseGui * getUi();
 	bool hide_ui;
 
 private:
@@ -31,17 +31,13 @@ private:
 
     Position position;
     CursorType cursor_type;
-    float gap;
-    float length;
-    unsigned int size;
-    ofColor color;
 
     //ui
     ofxPanel gui;
-    ofParameter<ofColor> color_slider;
-    ofParameter<float> change_gap;
-    ofParameter<float> change_length;
-    ofParameter<unsigned int> change_size;
+    ofParameter<ofColor> color;
+    ofParameter<float> gap;
+    ofParameter<float> length;
+    ofParameter<unsigned int> size;
 
     ofxButton crosshair_btn;
 	ofxButton t_crosshair_btn;

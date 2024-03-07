@@ -3,12 +3,18 @@
 //--------------------------------------------------------------
 void Application::setup()
 {
+    mode = Mode::VIEW_2D;
+    mode_change = false;
+    
     cursor.setup();
 
     drawingTool.setup();
     renderer.setup();
     imageExpImp.setup();
     geometrie3D.setup();
+
+    // keep last
+    interface.setup(&cursor, &drawingTool, &imageExpImp, &geometrie3D);
 }
 
 //--------------------------------------------------------------
@@ -20,14 +26,15 @@ void Application::update()
 void Application::draw()
 {
     cursor.draw();
+    interface.draw(mode, mode_change);
     switch (mode)
     {
-    case 2:
+    case Mode::VIEW_2D:
         drawingTool.draw();
         renderer.draw(drawingTool.getPrimitiveCreationData());
         imageExpImp.draw();
         break;
-    case 3:
+    case Mode::VIEW_3D:
         geometrie3D.draw();
         break;
     }
@@ -52,20 +59,22 @@ void Application::keyReleased(int key)
     switch (key)
     {
     case 'i':
-        imageExpImp.gui_image = !imageExpImp.gui_image;
-        break;
-    case '2':
-        mode = 2;
-        drawingTool.showMenu();
-        geometrie3D.gui3d_afficher = false;
-        break;
-    case '3':
-        mode = 3;
-        drawingTool.hideMenu();
-        geometrie3D.gui3d_afficher = !geometrie3D.gui3d_afficher;
+        imageExpImp.show_hide_ui();
         break;
     case 'c':
         cursor.open_close_ui();
+        break;
+    case '2':
+        mode = Mode::VIEW_2D;
+        drawingTool.showHideMenu();
+        geometrie3D.gui3d_afficher = false;
+        mode_change = true;
+        break;
+    case '3':
+        mode = Mode::VIEW_3D;
+        drawingTool.showHideMenu();
+        geometrie3D.gui3d_afficher = !geometrie3D.gui3d_afficher;
+        mode_change = true;
         break;
     }
 }

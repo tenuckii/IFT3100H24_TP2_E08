@@ -2,19 +2,15 @@
 
 void Cursor::setup()
 {
-    gui.setup();
+    gui.setup("Cursor");
 
     position = {.x = 0, .y = 0};
     cursor_type = CursorType::CROSSHAIR;
-    length = 5.0f;
-    gap = 2.5f;
-    size = 1;
-    color = ofColor(0, 255, 0, 255);
 
-    gui.add(color_slider.set("Crosshair Color", color, ofColor(0, 0), ofColor(255, 255)));
-    gui.add(change_gap.set("Change gap", gap, 0, 10));
-    gui.add(change_length.set("Change length", length, 0, 10));
-    gui.add(change_size.set("Change size", size, 0, 10));
+    gui.add(gap.set("Change gap", 2.5f, 0, 10));
+    gui.add(length.set("Change length", 5.0f, 0, 10));
+    gui.add(size.set("Change size", 1, 0, 10));
+    gui.add(color.set("Crosshair Color", ofColor(255), ofColor(0, 0), ofColor(255, 255)));
 
     crosshair_btn.setup("Crosshair", 200, 25);
     t_crosshair_btn.setup("T Crosshair", 200, 25);
@@ -34,7 +30,7 @@ void Cursor::setup()
     gui.add(&round_crosshair_btn);
     gui.add(&arrow_crosshair_btn);
 
-    hide_ui = false;
+    hide_ui = true;
 }
 void Cursor::draw()
 {
@@ -59,10 +55,6 @@ void Cursor::draw()
     }
     if (!hide_ui)
     {
-        color = color_slider;
-        gap = change_gap;
-        length = change_length;
-        size = change_size;
         gui.draw();
     }
 }
@@ -122,9 +114,8 @@ void Cursor::set_position(unsigned int x, unsigned int y)
 
 void Cursor::open_close_ui()
 {
-    hide_ui = hide_ui ? false : true;
+    hide_ui = !hide_ui;
 }
-
 void Cursor::set_cursor_crosshair()
 {
     cursor_type = CursorType::CROSSHAIR;
@@ -144,4 +135,9 @@ void Cursor::set_cursor_dot_crosshair()
 void Cursor::set_cursor_arrow_crosshair()
 {
     cursor_type = CursorType::ARROW_CROSSHAIR;
+}
+
+ofxBaseGui *Cursor::getUi()
+{
+    return &gui;
 }

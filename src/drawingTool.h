@@ -27,7 +27,7 @@ private:
 	ofxButton ellipse_button;
 
 	PrimitiveType currentPrimitiveType;
-	PrimitiveCreationData creationData;
+	PrimitiveCreationData* creationData;
 
 	bool show_menu;
 
@@ -36,8 +36,7 @@ public:
 	void exit();
 	void draw();
 
-	void showMenu();
-	void hideMenu();
+	void showHideMenu();
 
 	void setLineType();
 	void setRectangleType();
@@ -45,7 +44,7 @@ public:
 	void setCircleType();
 	void setEllipseType();
 
-	PrimitiveCreationData getPrimitiveCreationData();
+	PrimitiveCreationData* getPrimitiveCreationData();
 
 	bool isDrawModeActive() const;
 	ofColor getBackgroundColor();
@@ -53,4 +52,5 @@ public:
 	ofColor getFillColor();
 	float getOutlineWidth();
 	PrimitiveType getCurrentPrimitiveType();
+    ofxBaseGui * getUi();
 };
