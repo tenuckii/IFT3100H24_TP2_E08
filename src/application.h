@@ -4,6 +4,7 @@
 
 #include "ofxGui.h"
 #include "drawingTool.h"
+#include "renderer.h"
 #include "cursor.h"
 #include "ImageExpImp.h"
 #include "interface.h"

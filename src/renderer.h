@@ -1,33 +1,7 @@
 #pragma once
 
 #include "ofMain.h"
-
-enum class PrimitiveType {
-	NONE,
-	LINE,
-	RECTANGLE,
-	TRIANGLE,
-	CIRCLE,
-	ELLIPSE,
-};
-
-struct Primitive {
-	PrimitiveType type;
-	float start_pos[2];
-	float end_pos[2];
-	float outline_width;
-	unsigned char outline_color[4];
-	unsigned char fill_color[4];
-};
-
-struct PrimitiveCreationData {
-	bool is_active;
-	ofColor background_color;
-	ofColor outline_color;
-	ofColor fill_color;
-	float outline_width;
-	PrimitiveType primitiveType;
-};
+#include "drawingTool.h"
 
 class Renderer
 {
@@ -42,8 +16,9 @@ private:
 
 	// Used to draw primitives
 	bool draw_new_primitive_next_frame;
-	PrimitiveCreationData* latestCreationData;
+	DrawingToolStatus* latestDrawingToolStatus;
 	Primitive* primitives;
+	std::stack<Primitive> redoPrimitives;
 	int buffer_count;
 	int buffer_stride;
 	int buffer_size;
@@ -51,16 +26,20 @@ private:
 	int index;
 
 	float distanceBetweenTwoPoints(float x1, float y1, float x2, float y2);
+	void createPrimitive();
+	void createPrimitive(Primitive primitive);
+	void drawPrimitiveCurrentlyBeingDrawn();
+	void drawPrimitive(Primitive primitive);
 
 
 public:
 	void setup();
 	void update();
-	void draw(PrimitiveCreationData* primitiveCreationData);
+	void draw(DrawingToolStatus* primitiveCreationData);
 
-	void createPrimitive();
-	void drawPrimitiveCurrentlyBeingDrawn();
-	void drawPrimitive(Primitive primitive);
+	void undoLastPrimitive();
+	void redoLastPrimitive();
+	void clearPrimitives();
 
 	void setMousePosition(int x, int y);
 	void setMouseClickPosition(int x, int y);

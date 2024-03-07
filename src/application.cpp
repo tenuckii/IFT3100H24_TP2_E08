@@ -27,7 +27,7 @@ void Application::draw()
     {
     case Mode::VIEW_2D:
         drawingTool.draw();
-        renderer.draw(drawingTool.getPrimitiveCreationData());
+        renderer.draw(drawingTool.getDrawingToolStatus());
         imageExpImp.draw();
         break;
     case Mode::VIEW_3D:

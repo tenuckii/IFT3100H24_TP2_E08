@@ -4,7 +4,7 @@ void Cursor::setup()
 {
     gui.setup("Cursor");
 
-    position = {.x = 0, .y = 0};
+    position = {0, 0};
     cursor_type = CursorType::CROSSHAIR;
 
     gui.add(gap.set("Change gap", 2.5f, 0, 10));
