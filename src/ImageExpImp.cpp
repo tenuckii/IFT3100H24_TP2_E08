@@ -63,6 +63,7 @@ void ImageExpImp::export_image()
 	string time_stamp = ofGetTimestampString("-%y%m%d-%H%M%S-%i");
 
 	string file_name = fileName ;
+	string file = file_name + "_" + time_stamp;
 	if (is_mouse_button_pressed) {
 		image.grabScreen(mouse_press_x, mouse_press_y, mouse_current_x, mouse_current_y);
 	}
@@ -78,8 +79,7 @@ void ImageExpImp::export_image()
 		string ext = ofSystemTextBoxDialog("Format fichier (jpg, png, ...)", "png");
 
 		if (ext == "jpg" || ext == "png") {
-			file_name = direct.getPath() + "/" + file_name + "." + ext;
-			image.save(file_name);
+			file_name = direct.getPath() + "/" + file + "." + ext;
 			image.save(file_name);
 		}
 	}
@@ -109,10 +109,10 @@ void ImageExpImp::GUI_image_setup() {
 
 	import_img.setup("Import d'image");
 	//position image
-	img_start_x.set("x start position", 100, 0, ofGetWindowWidth());
-	img_start_y.set("y start position", 100, 0, ofGetWindowHeight());
-	img_end_x.set("x end position", 500, 0, ofGetWindowWidth());
-	img_end_y.set("y end position", 500, 0, ofGetWindowHeight());
+	img_start_x.set("x start position", 150, 0, ofGetWindowWidth());
+	img_start_y.set("y start position", 150, 0, ofGetWindowHeight());
+	img_end_x.set("x end position", 600, 0, ofGetWindowWidth());
+	img_end_y.set("y end position", 600, 0, ofGetWindowHeight());
 	//boutton import
 	import.setup("importe");
 	import.addListener(this,&ImageExpImp::import_button_pressed);
