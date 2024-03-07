@@ -30,7 +30,7 @@ void Cursor::setup()
     gui.add(&round_crosshair_btn);
     gui.add(&arrow_crosshair_btn);
 
-    hide_ui = true;
+    hide_ui = false;
 }
 void Cursor::draw()
 {
