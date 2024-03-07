@@ -27,6 +27,8 @@ void Application::draw()
     switch (mode)
     {
     case Mode::VIEW_2D:
+       case 2:
+          ofDisableLighting();
         drawingTool.draw();
         renderer.draw(drawingTool.getDrawingToolStatus());
         imageExpImp.draw();
