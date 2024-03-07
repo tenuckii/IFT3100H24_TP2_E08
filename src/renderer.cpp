@@ -82,6 +82,14 @@ void Renderer::drawPrimitiveCurrentlyBeingDrawn()
 
 void Renderer::drawPrimitive(Primitive primitive)
 {
+	if (primitive.selectionner)
+	{
+		primitive.outline_color[0] = 0;
+		primitive.outline_color[1] = 255;
+		primitive.outline_color[2] = 0;
+		primitive.outline_color[3] = 0;
+	}
+
 	// Circle data
 	float radius = distanceBetweenTwoPoints(primitive.start_pos[0], primitive.start_pos[1], primitive.end_pos[0], primitive.end_pos[1]);
 
@@ -202,6 +210,7 @@ void Renderer::drawPrimitive(Primitive primitive)
 	default:
 		break;
 	}
+	DrawMatrice.push_back(primitive);
 }
 
 void Renderer::setMousePosition(int x, int y)
@@ -236,6 +245,87 @@ float Renderer::distanceBetweenTwoPoints(float x1, float y1, float x2, float y2)
 
 	// Apply the Euclidean distance formula
 	return std::sqrt(std::pow(dx, 2) + std::pow(dy, 2));
+}
+bool Renderer::SelectChecker(int mouse_x, int mouse_y)
+{
+	int jeu_arbitraire = 20;
+	for each (Primitive forme in DrawMatrice)
+	{	
+		switch (forme.type)
+		{
+		case PrimitiveType::NONE:
+			break;
+		case PrimitiveType::LINE:
+			
+				if ((forme.end_pos[0] - forme.start_pos[0]) < jeu_arbitraire && (forme.end_pos[0] - forme.start_pos[0]) > -jeu_arbitraire)
+					 {
+					if (forme.end_pos[1] > forme.start_pos[1]) 
+					{
+						if (mouse_x < (forme.start_pos[0] + jeu_arbitraire) && mouse_x >(forme.end_pos[0] - jeu_arbitraire) && mouse_y > forme.start_pos[1]
+							&& mouse_y > forme.end_pos[1]) {
+							forme.selectionner = true;
+							return true;
+						}
+					}
+					else {
+						if (mouse_x < (forme.end_pos[0] + jeu_arbitraire) && mouse_x >(forme.start_pos[0] - jeu_arbitraire) && mouse_y < forme.start_pos[1]
+							&& mouse_y>forme.end_pos[1]) {
+							forme.selectionner = true;
+							return true;
+						}
+					}
+				}
+				float pente, borigine;
+				pente = (forme.end_pos[1] - forme.start_pos[1]) / (forme.end_pos[0] - forme.start_pos[0]);
+				borigine = forme.start_pos[1] - pente * forme.start_pos[0];
+				if ((mouse_y - jeu_arbitraire) < (pente * mouse_x + borigine) && (mouse_y + jeu_arbitraire) > (pente * mouse_x + borigine)
+					&& mouse_x > forme.start_pos[0] && mouse_x < forme.end_pos[0]) {
+					forme.selectionner = true;
+					return true;
+				}
+			
+			break;
+		case PrimitiveType::RECTANGLE:
+			int rectangleWith = forme.end_pos[0] - forme.start_pos[0];
+			int rectangleLenght= forme.end_pos[1] - forme.start_pos[1];
+			if ((mouse_x >= forme.start_pos[0] && mouse_x <= forme.start_pos[0] + rectangleWith) &&
+				(mouse_y >= forme.start_pos[1] && mouse_y <= forme.start_pos[1] + rectangleLenght))
+			{
+				forme.selectionner = true;
+				return true;
+			}
+
+			break;
+		case PrimitiveType::TRIANGLE:
+
+			float v1_x = forme.start_pos[0];
+			float v1_y = forme.start_pos[1];
+			float v2_x = forme.start_pos[0] + (forme.end_pos[0] - forme.start_pos[0]) / 2;
+			float v2_y = forme.end_pos[1];
+			float v3_x = forme.end_pos[0];
+			float v3_y = forme.start_pos[1];
+
+			glm::vec3 v1 = glm::normalize(glm::vec3(v1_x,v1_y,0) - glm::vec3(mouse_x,mouse_y,0));
+			glm::vec3 v2 = glm::normalize(glm::vec3(v2_x, v2_y,0) - glm::vec3(mouse_x, mouse_y, 0));
+			glm::vec3 v3 = glm::normalize(glm::vec3(v3_x, v3_y,0) - glm::vec3(mouse_x, mouse_y, 0));
+			float a1 = glm::orientedAngle(v1, v2, glm::vec3(0, 0, 1));
+			float a2 = glm::orientedAngle(v2, v3, glm::vec3(0, 0, 1));
+			float a3 = glm::orientedAngle(v3, v1, glm::vec3(0, 0, 1));
+			if (a1 < 0 && a2 < 0 && a3 < 0) return true;
+			else return false;
+
+			break;
+		case PrimitiveType::CIRCLE:
+
+			break;
+		case PrimitiveType::ELLIPSE:
+			break;
+		default:
+			break;
+
+		}
+	
+	}
 }
 
 Renderer::~Renderer()

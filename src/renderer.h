@@ -18,6 +18,7 @@ struct Primitive {
 	float outline_width;
 	unsigned char outline_color[4];
 	unsigned char fill_color[4];
+	bool selectionner;
 };
 
 struct PrimitiveCreationData {
@@ -39,7 +40,8 @@ private:
 
 	int mouse_current_x;
 	int mouse_current_y;
-
+	//historique et selection
+	vector<Primitive> DrawMatrice;
 	// Used to draw primitives
 	bool draw_new_primitive_next_frame;
 	PrimitiveCreationData latestCreationData;
@@ -65,6 +67,8 @@ public:
 	void setMousePosition(int x, int y);
 	void setMouseClickPosition(int x, int y);
 	void setMousePressStatus(bool pressed);
+
+	bool SelectChecker(int mouse_x, int mouse_y);
 
 	~Renderer();
 };

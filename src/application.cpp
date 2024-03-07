@@ -6,6 +6,7 @@ void Application::setup(){
     drawingTool.setup();
     renderer.setup();
     imageExpImp.setup();
+    selectionMode = false;
 }
 
 //--------------------------------------------------------------
@@ -40,6 +41,9 @@ void Application::keyReleased(int key){
        case 'i':
            imageExpImp.gui_image = !imageExpImp.gui_image;
                break;
+       case 's':
+           selectionMode = true;
+           break;
     }
 }
 
@@ -68,12 +72,21 @@ void Application::mouseDragged(int x, int y, int button){
 
 //--------------------------------------------------------------
 void Application::mousePressed(int x, int y, int button){
-    cursor.set_position(x,y);
 
-    renderer.setMousePressStatus(true);
+    cursor.set_position(x,y);
+    if(selectionMode)
+    {   
+        renderer.SelectChecker(x,y);
+
+    }
+    else { 
+        renderer.setMousePressStatus(true);
     renderer.setMousePosition(x, y);
     renderer.setMouseClickPosition(x, y);
     imageExpImp.mouse_press_y= y;
+
+    }
+ 
     
 
 }

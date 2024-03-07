@@ -9,6 +9,7 @@
 class Application : public ofBaseApp{
 
 	public:
+		bool selectionMode;
 		ImageExpImp imageExpImp;
 		void setup();
 		void update();
