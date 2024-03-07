@@ -13,21 +13,6 @@ void Interface::setup(Cursor *_cursor, DrawingTool *dt, ImageExpImp *iie, Geomet
     gui.add(drawing_tool->getUi());
     gui.add(image_import_export->getUi());
     gui.minimizeAll();
-
-    // //cursor
-    // cursor_btn.setup("Cursor", 200, 25);
-    // cursor_btn.addListener(this, &Interface::cursor_open_close_ui);
-    // gui.add(&cursor_btn);
-
-    // //drawing tool
-    // drawing_tool_btn.setup("Drawing Tool", 200, 25);
-    // drawing_tool_btn.addListener(this, &Interface::drawing_tool_open_close_ui);
-    // gui.add(&drawing_tool_btn);
-
-    // //image import export
-    // image_import_export_btn.setup("Drawing Tool", 200, 25);
-    // image_import_export_btn.addListener(this, &Interface::image_import_export_open_close_ui);
-    // gui.add(&image_import_export_btn);
 }
 
 void Interface::draw(Mode mode, bool &mode_change)
