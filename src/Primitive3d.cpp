@@ -55,14 +55,14 @@ void Geometrie::Gui3d_Setup()
 {
 	
 
-	Gui3d.setup("Primitive3D");
+	Gui3d.setup("3D");
 
 	Gui3d.setDefaultWidth(270);
 	Gui3d.setDefaultHeight(20);
 	Gui3d.setSize(270, 200);
 
 
-	primitive3d.setup();
+	primitive3d.setup("Primitive3D");
 
 	PositionX.set("x position", 0, -ofGetWindowWidth()/2, ofGetWindowWidth()/2);
 	PositionY.set("y position", 0, -ofGetWindowHeight() / 2, ofGetWindowHeight()/2);

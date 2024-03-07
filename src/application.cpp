@@ -1,7 +1,8 @@
 #include "application.h"
 
 //--------------------------------------------------------------
-void Application::setup(){
+void Application::setup()
+{
     cursor.setup();
 
     drawingTool.setup();
@@ -54,25 +55,33 @@ void Application::keyReleased(int key)
     // exporter/importer
     switch (key)
     {
-       case 'i':
-           imageExpImp.gui_image = !imageExpImp.gui_image;
-               break;
+    case '2':
+        mode = VIEW_2D;
+        mode_change = true;
+        break;
+    case '3':
+        mode = VIEW_3D;
+        mode_change = true;
+        break;
     }
 }
 
 //--------------------------------------------------------------
-void Application::mouseMoved(int x, int y ){
-    cursor.set_position(x,y);
-    renderer.setMousePosition(x, y); 
-    if (imageExpImp.is_mouse_button_pressed) {
+void Application::mouseMoved(int x, int y)
+{
+    cursor.set_position(x, y);
+    renderer.setMousePosition(x, y);
+    if (imageExpImp.is_mouse_button_pressed)
+    {
         imageExpImp.mouse_current_x = x;
         imageExpImp.mouse_current_y = y;
     }
 }
 
 //--------------------------------------------------------------
-void Application::mouseDragged(int x, int y, int button){
-    cursor.set_position(x,y);
+void Application::mouseDragged(int x, int y, int button)
+{
+    cursor.set_position(x, y);
     renderer.setMousePosition(x, y);
 
     if (imageExpImp.is_mouse_button_pressed)
@@ -83,15 +92,14 @@ void Application::mouseDragged(int x, int y, int button){
 }
 
 //--------------------------------------------------------------
-void Application::mousePressed(int x, int y, int button){
-    cursor.set_position(x,y);
+void Application::mousePressed(int x, int y, int button)
+{
+    cursor.set_position(x, y);
 
     renderer.setMousePressStatus(true);
     renderer.setMousePosition(x, y);
     renderer.setMouseClickPosition(x, y);
-    imageExpImp.mouse_press_y= y;
-    
-
+    imageExpImp.mouse_press_y = y;
 }
 
 //--------------------------------------------------------------
@@ -109,27 +117,29 @@ void Application::mouseReleased(int x, int y, int button)
     }
 }
 //--------------------------------------------------------------
-void Application::mouseEntered(int x, int y){
-    cursor.set_position(x,y);
+void Application::mouseEntered(int x, int y)
+{
+    cursor.set_position(x, y);
     renderer.setMousePosition(x, y);
 }
 
 //--------------------------------------------------------------
-void Application::mouseExited(int x, int y){
+void Application::mouseExited(int x, int y)
+{
     renderer.setMousePosition(x, y);
 }
 
 //--------------------------------------------------------------
-void Application::windowResized(int w, int h){
-
+void Application::windowResized(int w, int h)
+{
 }
 
 //--------------------------------------------------------------
-void Application::gotMessage(ofMessage msg){
-
+void Application::gotMessage(ofMessage msg)
+{
 }
 
 //--------------------------------------------------------------
-void Application::dragEvent(ofDragInfo dragInfo){ 
-
+void Application::dragEvent(ofDragInfo dragInfo)
+{
 }
