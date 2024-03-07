@@ -8,7 +8,7 @@
 #   The location of your root openFrameworks installation
 #       (default) OF_ROOT = ../../.. 
 ################################################################################
-# OF_ROOT = ../../..
+OF_ROOT = C:\Users\benja\Desktop\of_v0.11.2_vs2017_release
 
 ################################################################################
 # PROJECT ROOT
