@@ -42,7 +42,7 @@ private:
 
 	// Used to draw primitives
 	bool draw_new_primitive_next_frame;
-	PrimitiveCreationData latestCreationData;
+	PrimitiveCreationData* latestCreationData;
 	Primitive* primitives;
 	int buffer_count;
 	int buffer_stride;
@@ -56,7 +56,7 @@ private:
 public:
 	void setup();
 	void update();
-	void draw(PrimitiveCreationData primitiveCreationData);
+	void draw(PrimitiveCreationData* primitiveCreationData);
 
 	void createPrimitive();
 	void drawPrimitiveCurrentlyBeingDrawn();

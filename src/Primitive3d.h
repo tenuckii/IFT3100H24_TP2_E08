@@ -65,4 +65,5 @@ public:
 	void Draw_sphere(ofColor p_color, ofVec3f position, float raton) const;
 
 
+    ofxBaseGui * getUi();
 };

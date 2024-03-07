@@ -53,6 +53,8 @@ public:
 	void exporte_button_pressed();
 	void exportPartie_button_pressed();
 
+    void show_hide_ui();
+
 	bool is_mouse_button_pressed;
 	
 
@@ -70,5 +72,6 @@ public:
 	ofxGuiGroup export_img;
 	
 
+    ofxBaseGui * getUi();
 
 };

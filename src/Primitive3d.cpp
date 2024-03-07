@@ -170,3 +170,9 @@ void Geometrie::Draw_sphere(ofColor p_color, ofVec3f position, float rayon) cons
 	ofSetColor(p_color);
 	ofDrawSphere(position, rayon);
 }
+
+
+
+ofxBaseGui * Geometrie::getUi(){
+    return &Gui3d;
+}

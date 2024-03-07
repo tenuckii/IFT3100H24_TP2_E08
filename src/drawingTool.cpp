@@ -5,6 +5,8 @@ void DrawingTool::setup()
 	currentPrimitiveType = PrimitiveType::NONE;
 	show_menu = true;
 
+    creationData = (PrimitiveCreationData*)std::malloc(sizeof(PrimitiveCreationData));
+
 	gui.setup("Outils de dessin");
 	gui.setDefaultWidth(400);
 
@@ -57,14 +59,9 @@ void DrawingTool::draw() {
 		gui.draw();
 }
 
-void DrawingTool::showMenu()
+void DrawingTool::showHideMenu()
 {
-	show_menu = true;
-}
-
-void DrawingTool::hideMenu()
-{
-	show_menu = false;
+	show_menu = !show_menu;
 }
 
 void DrawingTool::setLineType()
@@ -92,14 +89,14 @@ void DrawingTool::setEllipseType()
 	currentPrimitiveType = PrimitiveType::ELLIPSE;
 }
 
-PrimitiveCreationData DrawingTool::getPrimitiveCreationData()
+PrimitiveCreationData* DrawingTool::getPrimitiveCreationData()
 {
-	creationData.is_active = show_menu;
-	creationData.background_color = color_picker_background;
-	creationData.outline_color = color_picker_shape_outline;
-	creationData.fill_color = color_picker_shape_fill;
-	creationData.outline_width = slider_stroke_weight;
-	creationData.primitiveType = currentPrimitiveType;
+	creationData->is_active = show_menu;
+	creationData->background_color = color_picker_background;
+	creationData->outline_color = color_picker_shape_outline;
+	creationData->fill_color = color_picker_shape_fill;
+	creationData->outline_width = slider_stroke_weight;
+	creationData->primitiveType = currentPrimitiveType;
 	return creationData;
 }
 
@@ -131,4 +128,8 @@ float DrawingTool::getOutlineWidth()
 PrimitiveType DrawingTool::getCurrentPrimitiveType()
 {
 	return currentPrimitiveType;
+}
+
+ofxBaseGui * DrawingTool::getUi(){
+    return &gui;
 }

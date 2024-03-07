@@ -9,106 +9,82 @@ void Application::setup(){
     imageExpImp.setup();
     geometrie3D.setup();
 
+    // keep last
+    interface.setup(&cursor, &drawingTool, &imageExpImp, &geometrie3D);
 }
 
 //--------------------------------------------------------------
-void Application::update(){
-
+void Application::update()
+{
 }
 
 //--------------------------------------------------------------
-void Application::draw(){
+void Application::draw()
+{
     cursor.draw();
+    interface.draw(mode, mode_change);
     switch (mode)
     {
-       case 2:
+    case Mode::VIEW_2D:
         drawingTool.draw();
         renderer.draw(drawingTool.getPrimitiveCreationData());
         imageExpImp.draw();
         break;
-       case 3:
-           geometrie3D.draw();
-           break;
+    case Mode::VIEW_3D:
+        geometrie3D.draw();
+        break;
     }
-    
-   
 }
 
 void Application::exit()
 {
+    cursor.exit();
     drawingTool.exit();
-
 }
 
 //--------------------------------------------------------------
-void Application::keyPressed(int key){
-
+void Application::keyPressed(int key)
+{
 }
 
 //--------------------------------------------------------------
-void Application::keyReleased(int key){
+void Application::keyReleased(int key)
+{
 
-    //exporter/importer
+    // exporter/importer
     switch (key)
     {
        case 'i':
            imageExpImp.gui_image = !imageExpImp.gui_image;
                break;
-       case '2':
-           mode = 2;
-           drawingTool.showMenu();
-           geometrie3D.gui3d_afficher = false;
-           break;
-       case '3':
-           mode = 3;
-           drawingTool.hideMenu();
-           geometrie3D.gui3d_afficher = !geometrie3D.gui3d_afficher;
-           break;
-
     }
-    
 }
 
 //--------------------------------------------------------------
 void Application::mouseMoved(int x, int y ){
     cursor.set_position(x,y);
-
     renderer.setMousePosition(x, y); 
-
     if (imageExpImp.is_mouse_button_pressed) {
         imageExpImp.mouse_current_x = x;
         imageExpImp.mouse_current_y = y;
     }
-
 }
 
 //--------------------------------------------------------------
 void Application::mouseDragged(int x, int y, int button){
-
- cursor.set_position(x,y);
-
+    cursor.set_position(x,y);
     renderer.setMousePosition(x, y);
 
- if (imageExpImp.is_mouse_button_pressed) {
-     imageExpImp.mouse_current_x = x;
-     imageExpImp.mouse_current_y = y;
- }
-
+    if (imageExpImp.is_mouse_button_pressed)
+    {
+        imageExpImp.mouse_current_x = x;
+        imageExpImp.mouse_current_y = y;
+    }
 }
 
 //--------------------------------------------------------------
 void Application::mousePressed(int x, int y, int button){
     cursor.set_position(x,y);
-
-
-    // pour exporter une partie 
-    if (imageExpImp.is_mouse_button_pressed) {
-        imageExpImp.mouse_current_x = x;
-        imageExpImp.mouse_current_y = y;
-
-        imageExpImp.mouse_press_x = x;
-        imageExpImp.mouse_press_y= y;
-    }
 
     renderer.setMousePressStatus(true);
     renderer.setMousePosition(x, y);
@@ -116,35 +92,26 @@ void Application::mousePressed(int x, int y, int button){
     imageExpImp.mouse_press_y= y;
     
 
-
 }
 
 //--------------------------------------------------------------
-void Application::mouseReleased(int x, int y, int button){
-
-  cursor.set_position(x,y);
-
-
-  // pour exporter une partie 
-    if (imageExpImp.is_mouse_button_pressed) {
-
-      imageExpImp.mouse_current_x = x;
-      imageExpImp.mouse_current_y = y;
-      imageExpImp.export_image();
-      imageExpImp.is_mouse_button_pressed = false;
-  }
-
-  //
-
+void Application::mouseReleased(int x, int y, int button)
+{
+    cursor.set_position(x, y);
+    renderer.setMousePressStatus(false);
+    renderer.setMousePosition(x, y);
+    if (imageExpImp.is_mouse_button_pressed)
+    {
+        imageExpImp.mouse_current_x = x;
+        imageExpImp.mouse_current_y = y;
+        imageExpImp.export_image();
+        imageExpImp.is_mouse_button_pressed = false;
+    }
 }
-
 //--------------------------------------------------------------
 void Application::mouseEntered(int x, int y){
-
-  cursor.set_position(x,y);
-
+    cursor.set_position(x,y);
     renderer.setMousePosition(x, y);
-
 }
 
 //--------------------------------------------------------------
