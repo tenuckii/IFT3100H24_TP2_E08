@@ -2,9 +2,6 @@
 
 void Renderer::setup()
 {
-    //on a pas besoin de cap a 60fps
-	// ofSetFrameRate(60);
-
 	buffer_count = 200;
 	buffer_head = 0;
 	buffer_stride = sizeof(Primitive);

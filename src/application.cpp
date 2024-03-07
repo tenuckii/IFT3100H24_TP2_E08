@@ -22,7 +22,7 @@ void Application::update()
 //--------------------------------------------------------------
 void Application::draw()
 {
-    cursor.draw();
+    cursor.draw(drawingTool.getCurrentPrimitiveType());
     interface.draw(mode, mode_change);
     switch (mode)
     {

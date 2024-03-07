@@ -82,6 +82,7 @@ public:
 
 	void showHideMenu();
 
+	void setNoneType();
 	void setLineType();
 	void setRectangleType();
 	void setTriangleType();

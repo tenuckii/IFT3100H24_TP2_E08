@@ -64,6 +64,7 @@ void DrawingTool::setup()
 	gui.add(&undo_button);
 	gui.add(&redo_button);
 	gui.add(&clear_button);
+
 }
 
 void DrawingTool::exit()
@@ -76,13 +77,26 @@ void DrawingTool::exit()
 }
 
 void DrawingTool::draw() {
+	
 	if (show_menu)
 		gui.draw();
+
+	// Cannot draw when menu is minimized
+	if (gui.isMinimized() && !gui.isHeaderEnabled())
+		currentPrimitiveType = PrimitiveType::NONE;
 }
 
 void DrawingTool::showHideMenu()
 {
 	show_menu = !show_menu;
+
+	if (!show_menu)
+		currentPrimitiveType = PrimitiveType::NONE;
+}
+
+void DrawingTool::setNoneType()
+{
+	currentPrimitiveType = PrimitiveType::NONE;
 }
 
 void DrawingTool::setLineType()

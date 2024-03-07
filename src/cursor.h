@@ -2,12 +2,13 @@
 
 #include "ofMain.h"
 #include "ofxGui.h"
+#include "drawingTool.h"
 
 class Cursor
 {
 public:
     void setup();
-    void draw();
+    void draw(PrimitiveType primitiveType);
     void exit();
     void set_position(unsigned int x, unsigned int y);
     void open_close_ui();
@@ -50,6 +51,7 @@ private:
     void round_crosshair();
     void dot_crosshair();
     void arrow_crosshair();
+    void primitive_crosshair(PrimitiveType type);
     
     void set_cursor_crosshair();
     void set_cursor_t_crosshair();
