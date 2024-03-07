@@ -2,7 +2,8 @@
 
 void Renderer::setup()
 {
-	ofSetFrameRate(60);
+    //on a pas besoin de cap a 60fps
+	// ofSetFrameRate(60);
 
 	buffer_count = 200;
 	buffer_head = 0;
