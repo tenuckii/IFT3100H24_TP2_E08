@@ -17,7 +17,7 @@ public:
     ImageExpImp imageExpImp;
 
     Geometrie geometrie3D;
-    bool selectionMode;
+    
     void setup();
     void update();
     void draw();

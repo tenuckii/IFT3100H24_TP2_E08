@@ -14,7 +14,7 @@ private:
 	int mouse_current_x;
 	int mouse_current_y;
 	//historique et selection
-	vector<Primitive> DrawMatrice;
+	vector<Primitive*> DrawMatrice;
 	// Used to draw primitives
 	bool draw_new_primitive_next_frame;
 	DrawingToolStatus* latestDrawingToolStatus;
@@ -25,6 +25,7 @@ private:
 	int buffer_size;
 	int buffer_head;
 	int index;
+	
 
 	float distanceBetweenTwoPoints(float x1, float y1, float x2, float y2);
 	void createPrimitive();
@@ -47,6 +48,6 @@ public:
 	void setMousePressStatus(bool pressed);
 
 	bool SelectChecker(int mouse_x, int mouse_y);
-
+	bool inSelection;
 	~Renderer();
 };

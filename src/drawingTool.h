@@ -32,6 +32,7 @@ struct Primitive {
 	float outline_width;
 	unsigned char outline_color[4];
 	unsigned char fill_color[4];
+	bool selectionner;
 };
 
 struct DrawingToolStatus {
