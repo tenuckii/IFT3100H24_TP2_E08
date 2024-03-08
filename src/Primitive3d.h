@@ -112,7 +112,7 @@ public:
 	void clear();
 
 
-	void Draw_cube(ofColor p_color, ofVec3f position, float rayon) const;
+	void Draw_cube(ofColor p_color, ofVec3f position, float width, float height, float depth) const;
 	void Draw_sphere(ofColor p_color, ofVec3f position, float rayon) const;
 	void Draw_Modele(float angle, ofVec3f position, ofxAssimpModelLoader &model, float rotax, float rotay, float roatz, float scalex, float scaley, float scalez) const;
 	void Draw_dernier_Modele(ofVec3f position, ofxAssimpModelLoader& model);

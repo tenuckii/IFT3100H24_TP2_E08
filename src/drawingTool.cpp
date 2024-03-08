@@ -74,6 +74,11 @@ void DrawingTool::exit()
 	triangle_button.removeListener(this, &DrawingTool::setTriangleType);
 	circle_button.removeListener(this, &DrawingTool::setCircleType);
 	ellipse_button.removeListener(this, &DrawingTool::setEllipseType);
+	house_button.removeListener(this, &DrawingTool::setHouseType);
+	sun_button.removeListener(this, &DrawingTool::setSunType);
+	undo_button.removeListener(this, &DrawingTool::undo);
+	redo_button.removeListener(this, &DrawingTool::redo);
+	clear_button.removeListener(this, &DrawingTool::clear);
 }
 
 void DrawingTool::draw() {
@@ -82,7 +87,7 @@ void DrawingTool::draw() {
 		gui.draw();
 
 	// Cannot draw when menu is minimized
-	if (gui.isMinimized() && !gui.isHeaderEnabled())
+	if (gui.isMinimized() == 1)
 		currentPrimitiveType = PrimitiveType::NONE;
 }
 

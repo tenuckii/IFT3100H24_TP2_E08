@@ -99,8 +99,10 @@ void Renderer::createPrimitive()
 	primitives[buffer_head].fill_color[3] = this->latestDrawingToolStatus->fill_color.a;
 
 	primitives[buffer_head].outline_width = this->latestDrawingToolStatus->outline_width;
-
+	primitives[buffer_head].selectionner = false;
+	DrawMatrice.push_back(&primitives[buffer_head]);
 	buffer_head = ++buffer_head >= buffer_count ? 0 : buffer_head; // boucler sur le tableau si plein
+
 }
 
 void Renderer::createPrimitive(Primitive primitive)
@@ -124,6 +126,8 @@ void Renderer::createPrimitive(Primitive primitive)
 	primitives[buffer_head].fill_color[3] = primitive.fill_color[3];
 
 	primitives[buffer_head].outline_width = primitive.outline_width;
+
+	DrawMatrice.push_back(&primitives[buffer_head]);
 
 	buffer_head = ++buffer_head >= buffer_count ? 0 : buffer_head; // boucler sur le tableau si plein
 }
@@ -150,6 +154,18 @@ void Renderer::drawPrimitiveCurrentlyBeingDrawn()
 
 void Renderer::drawPrimitive(Primitive primitive)
 {
+	if (primitive.selectionner)
+	{
+		primitive.outline_color[0] = 0;
+		primitive.outline_color[1] = 255;
+		primitive.outline_color[2] = 0;
+		primitive.outline_color[3] = 255;
+		primitive.fill_color[0] = 0;
+		primitive.fill_color[1] = 255;
+		primitive.fill_color[2] = 0;
+		primitive.fill_color[3] = 255;
+	}
+
 	float width = primitive.end_pos[0] - primitive.start_pos[0];
 	float height = primitive.end_pos[1] - primitive.start_pos[1];
 
@@ -413,6 +429,8 @@ void Renderer::drawPrimitive(Primitive primitive)
 	default:
 		break;
 	}
+
+	
 }
 
 void Renderer::setMousePosition(int x, int y)
@@ -447,6 +465,110 @@ float Renderer::distanceBetweenTwoPoints(float x1, float y1, float x2, float y2)
 
 	// Apply the Euclidean distance formula
 	return std::sqrt(std::pow(dx, 2) + std::pow(dy, 2));
+}
+bool Renderer::SelectChecker(int mouse_x, int mouse_y)
+{
+	int rectangleLenght = 0;
+	int jeu_arbitraire = 5;
+	int rectangleWith = 0;
+	float v1_x = 0.0;
+	float v1_y = 0.0;
+	float v2_x = 0.0;
+	float v2_y = 0.0;
+	float v3_x = 0.0;
+	float v3_y = 0.0;
+	float a1 = 0.0;
+		float a2 = 0.0;
+		float a3 = 0.0;
+		glm::vec3 v1;
+		glm::vec3 v2;
+		glm::vec3 v3;
+
+	for each (auto forme in DrawMatrice)
+	{	
+		switch (forme->type)
+		{
+		case PrimitiveType::NONE:
+			break;
+		case PrimitiveType::LINE:
+		{	
+				if ((forme->end_pos[0] - forme->start_pos[0]) < jeu_arbitraire && (forme->end_pos[0] - forme->start_pos[0]) > -jeu_arbitraire)
+					 {
+					if (forme->end_pos[1] > forme->start_pos[1]) 
+					{
+						if (mouse_x < (forme->start_pos[0] + jeu_arbitraire) && mouse_x >(forme->end_pos[0] - jeu_arbitraire) && mouse_y > forme->start_pos[1]
+							&& mouse_y > forme->end_pos[1]) {
+							forme->selectionner = !forme->selectionner;
+							return true;
+						}
+					}
+					else {
+						if (mouse_x < (forme->end_pos[0] + jeu_arbitraire) && mouse_x >(forme->start_pos[0] - jeu_arbitraire) && mouse_y < forme->start_pos[1]
+							&& mouse_y>forme->end_pos[1]) {
+							forme->selectionner = !forme->selectionner;
+							return true;
+						}
+					}
+				}
+				float pente, borigine;
+				pente = (forme->end_pos[1] - forme->start_pos[1]) / (forme->end_pos[0] - forme->start_pos[0]);
+				borigine = forme->start_pos[1] - pente * forme->start_pos[0];
+				if ((mouse_y - jeu_arbitraire) < (pente * mouse_x + borigine) && (mouse_y + jeu_arbitraire) > (pente * mouse_x + borigine)
+					&& mouse_x > forme->start_pos[0] && mouse_x < forme->end_pos[0]) {
+					forme->selectionner = !forme->selectionner;
+					return true;
+				}
+			
+
+		}
+			
+			
+			break;
+		case PrimitiveType::RECTANGLE:
+			 rectangleWith = forme->end_pos[0] - forme->start_pos[0];
+			 rectangleLenght= forme->end_pos[1] - forme->start_pos[1];
+			if ((mouse_x >= forme->start_pos[0] && mouse_x <= forme->start_pos[0] + rectangleWith) &&
+				(mouse_y >= forme->start_pos[1] && mouse_y <= forme->start_pos[1] + rectangleLenght))
+			{
+				forme->selectionner = !forme->selectionner;
+				return true;
+			}
+
+			break;
+		case PrimitiveType::TRIANGLE:
+
+			 v1_x = forme->start_pos[0];
+			 v1_y = forme->start_pos[1];
+			 v2_x = forme->start_pos[0] + (forme->end_pos[0] - forme->start_pos[0]) / 2;
+			 v2_y = forme->end_pos[1];
+			 v3_x = forme->end_pos[0];
+			 v3_y = forme->start_pos[1];
+
+			 v1 = glm::normalize(glm::vec3(v1_x,v1_y,0) - glm::vec3(mouse_x,mouse_y,0));
+			 v2 = glm::normalize(glm::vec3(v2_x, v2_y,0) - glm::vec3(mouse_x, mouse_y, 0));
+			 v3 = glm::normalize(glm::vec3(v3_x, v3_y,0) - glm::vec3(mouse_x, mouse_y, 0));
+			 a1 = glm::orientedAngle(v1, v2, glm::vec3(0, 0, 1));
+			 a2 = glm::orientedAngle(v2, v3, glm::vec3(0, 0, 1));
+			 a3 = glm::orientedAngle(v3, v1, glm::vec3(0, 0, 1));
+			 if (a1 < 0 && a2 < 0 && a3 < 0)
+			 {
+				 forme->selectionner = !forme->selectionner;
+				 return true;
+				 
+			 }
+			else 
+
+			break;
+		case PrimitiveType::CIRCLE:
+
+			break;
+		case PrimitiveType::ELLIPSE:
+			break;
+
+		}
+	
+	}
+	return false;
 }
 
 Renderer::~Renderer()

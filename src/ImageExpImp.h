@@ -22,22 +22,38 @@ struct image_struct
 };
 class ImageExpImp
 {
-public:
+private : 
 	std::vector<image_struct> vecImage;
+
+	int radius;
+
+	bool zoneExportingInProgress;
+	bool exportOnMouseRelease;
 
 	ofImage img;
 	ofxPanel importeGui;
 
-	bool gui_image = false;
-	 
+	ofParameter<int> img_start_x;
+	ofParameter<int> img_start_y;
+	ofParameter<int> img_end_x;
+	ofParameter<int> img_end_y;
+
+	ofxButton import;
+	ofxButton exporte;
+	ofxButton exportPartie;
+
+	ofxGuiGroup import_img;
+	ofxGuiGroup export_img;
+public:
+
+	bool is_mouse_button_pressed;
+
 	int mouse_press_x;
 	int mouse_press_y;
 
 	int mouse_current_x;
 	int mouse_current_y;
-
-	int radius;
-
+	
 	void setup();
 	void update();
 	void draw();
@@ -47,29 +63,11 @@ public:
 	void export_image();
 	void image_import();
 
-	//gui image
 	void GUI_image_setup();
 	void import_button_pressed();
 	void exporte_button_pressed();
 	void exportPartie_button_pressed();
 
-    void show_hide_ui();
-
-	bool is_mouse_button_pressed;
-	
-
-	ofParameter<int> img_start_x;
-	ofParameter<int> img_start_y;
-	ofParameter<int> img_end_x;
-	ofParameter<int> img_end_y;
-	ofParameter<string> fileName;
-
-	ofxButton import;
-	ofxButton exporte;
-	ofxButton exportPartie;
-
-	ofxGuiGroup import_img;
-	ofxGuiGroup export_img;
 	
 
     ofxBaseGui * getUi();
