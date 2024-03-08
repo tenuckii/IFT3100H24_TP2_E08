@@ -2,21 +2,21 @@
 
 void Cursor::setup()
 {
-    gui.setup("Cursor");
+    gui.setup("Curseur");
 
     position = {0, 0};
     cursor_type = CursorType::CROSSHAIR;
 
-    gui.add(gap.set("Change gap", 2.5f, 0, 10));
-    gui.add(length.set("Change length", 5.0f, 0, 10));
-    gui.add(size.set("Change size", 1, 0, 10));
-    gui.add(color.set("Crosshair Color", ofColor(255), ofColor(0, 0), ofColor(255, 255)));
+    gui.add(gap.set("Ecart", 2.5f, 0, 10));
+    gui.add(length.set("Longueur", 5.0f, 0, 10));
+    gui.add(size.set("Taille", 1, 0, 10));
+    gui.add(color.set("Couleur", ofColor(255), ofColor(0, 0), ofColor(255, 255)));
 
-    crosshair_btn.setup("Crosshair", 200, 25);
-    t_crosshair_btn.setup("T Crosshair", 200, 25);
-    round_crosshair_btn.setup("Round Crosshair", 200, 25);
-    dot_crosshair_btn.setup("Dot Crosshair", 200, 25);
-    arrow_crosshair_btn.setup("Arrow Crosshair", 200, 25);
+    crosshair_btn.setup("Croix", 200, 25);
+    t_crosshair_btn.setup("T", 200, 25);
+    round_crosshair_btn.setup("Cercle", 200, 25);
+    dot_crosshair_btn.setup("Point", 200, 25);
+    arrow_crosshair_btn.setup("Fleche", 200, 25);
 
     crosshair_btn.addListener(this, &Cursor::set_cursor_crosshair);
     t_crosshair_btn.addListener(this, &Cursor::set_cursor_t_crosshair);

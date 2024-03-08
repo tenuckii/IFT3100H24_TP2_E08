@@ -43,7 +43,6 @@ void Interface::exit()
 {
     cursor_btn.removeListener(this, &Interface::cursor_open_close_ui);
     drawing_tool_btn.removeListener(this, &Interface::drawing_tool_open_close_ui);
-    image_import_export_btn.removeListener(this, &Interface::image_import_export_open_close_ui);
 }
 
 void Interface::cursor_open_close_ui()
@@ -53,8 +52,4 @@ void Interface::cursor_open_close_ui()
 void Interface::drawing_tool_open_close_ui()
 {
     drawing_tool->showHideMenu();
-}
-void Interface::image_import_export_open_close_ui()
-{
-    image_import_export->show_hide_ui();
 }

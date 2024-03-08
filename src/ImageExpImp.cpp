@@ -20,10 +20,6 @@ void ImageExpImp::draw()
             vecImage[i].x2,
             vecImage[i].y2);
     }
-    if (gui_image)
-    {
-        importeGui.draw();
-    }
 
     if (is_mouse_button_pressed)
     {
@@ -101,21 +97,21 @@ void ImageExpImp::image_import()
 }
 void ImageExpImp::GUI_image_setup()
 {
-    importeGui.setup("Image Importer/Exporter");
+    importeGui.setup("Images");
 
     importeGui.setDefaultWidth(270);
     importeGui.setDefaultHeight(20);
     importeGui.setSize(270, 200);
     importeGui.setPosition(750, 10);
 
-    import_img.setup("Import d'image");
+    import_img.setup("Importation");
     // position image
-    img_start_x.set("x start position", 150, 0, ofGetWindowWidth());
-    img_start_y.set("y start position", 150, 0, ofGetWindowHeight());
-    img_end_x.set("x end position", 600, 0, ofGetWindowWidth());
-    img_end_y.set("y end position", 600, 0, ofGetWindowHeight());
+    img_start_x.set("Position de debut en x", 150, 0, ofGetWindowWidth());
+    img_start_y.set("Position de debut en y", 150, 0, ofGetWindowHeight());
+    img_end_x.set("Position de fin en x", 600, 0, ofGetWindowWidth());
+    img_end_y.set("Position de fin en y", 600, 0, ofGetWindowHeight());
     // boutton import
-    import.setup("importe");
+    import.setup("Importer");
     import.addListener(this, &ImageExpImp::import_button_pressed);
 
     import_img.add(img_start_x);
@@ -125,15 +121,15 @@ void ImageExpImp::GUI_image_setup()
     import_img.add(&import);
 
     // export
-    export_img.setup("Export d'image");
+    export_img.setup("Exportation");
     // boutton export1
-    exporte.setup("Exporter");
+    exporte.setup("Exporter l'ecran");
     exporte.addListener(this, &ImageExpImp::exporte_button_pressed);
     // boutton export2
-    exportPartie.setup("Exporter Partie");
+    exportPartie.setup("Exporter une zone de l'ecran");
     exportPartie.addListener(this, &ImageExpImp::exportPartie_button_pressed);
 
-    fileName.set("Entre le nom du fichier");
+    fileName.set("Nom du nouveau fichier");
 
     export_img.add(fileName);
     export_img.add(&exporte);
@@ -157,11 +153,6 @@ void ImageExpImp::exporte_button_pressed()
 void ImageExpImp::exportPartie_button_pressed()
 {
     is_mouse_button_pressed = true;
-}
-
-void ImageExpImp::show_hide_ui()
-{
-    gui_image = !gui_image;
 }
 
 ofxBaseGui * ImageExpImp::getUi(){

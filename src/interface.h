@@ -34,5 +34,4 @@ private:
 
     void cursor_open_close_ui();
     void drawing_tool_open_close_ui();
-    void image_import_export_open_close_ui();
 };
