@@ -3,6 +3,7 @@
 void ImageExpImp::setup()
 {
     GUI_image_setup();
+    zoneExportingInProgress = exportOnMouseRelease = false;
 }
 
 void ImageExpImp::update()
@@ -21,14 +22,25 @@ void ImageExpImp::draw()
             vecImage[i].y2);
     }
 
-    if (is_mouse_button_pressed)
-    {
-        // dessiner la zone de s�lection
-        draw_zone(
-            mouse_press_x,
-            mouse_press_y,
-            mouse_current_x,
-            mouse_current_y);
+    if (zoneExportingInProgress) {
+
+        if (exportOnMouseRelease && !is_mouse_button_pressed) {
+
+            // exporter l'image dans la zone selectionne
+            export_image();
+            exportOnMouseRelease = false;
+            zoneExportingInProgress = false;
+        }
+        else if (is_mouse_button_pressed) {
+            exportOnMouseRelease = true;
+
+            // dessiner la zone de selection
+            draw_zone(
+                mouse_press_x,
+                mouse_press_y,
+                mouse_current_x,
+                mouse_current_y);
+        }
     }
 }
 
@@ -52,31 +64,25 @@ void ImageExpImp::export_image()
 {
     ofImage image;
 
-    // extraire des donn�es temporelles format�es
-    string time_stamp = ofGetTimestampString("-%y%m%d-%H%M%S-%i");
-
-    string file_name = fileName;
-    string file = file_name + "_" + time_stamp;
-    if (is_mouse_button_pressed)
-    {
-        image.grabScreen(mouse_press_x, mouse_press_y, mouse_current_x, mouse_current_y);
-    }
-    else
-    {
-        image.grabScreen(0, 0, ofGetWindowWidth(), ofGetWindowHeight());
-    }
     // capturer le contenu du framebuffer actif
+    if (zoneExportingInProgress) {
+        float xStart = mouse_current_x < mouse_press_x ? mouse_current_x : mouse_press_x;
+        float yStart = mouse_current_y < mouse_press_y ? mouse_current_y : mouse_press_y;
+        float width = abs(mouse_current_x - mouse_press_x);
+        float height = abs(mouse_current_y - mouse_press_y);
+        image.grabScreen(xStart, yStart, width, height);
+    }
+    
+    else
+        image.grabScreen(0, 0, ofGetWindowWidth(), ofGetWindowHeight());
 
-    ofFileDialogResult direct = ofSystemLoadDialog("Enregistrer dans...", true);
-    if (direct.bSuccess)
+    ofFileDialogResult directory = ofSystemLoadDialog("Enregistrer dans...", true);
+    if (directory.bSuccess)
     {
-        string ext = ofSystemTextBoxDialog("Format fichier (jpg, png, ...)", "png");
-
-        if (ext == "jpg" || ext == "png")
-        {
-            file_name = direct.getPath() + "/" + file + "." + ext;
-            image.save(file_name);
-        }
+        string time_stamp = ofGetTimestampString("-%y%m%d-%H%M%S-%i");
+        string fileName = ofSystemTextBoxDialog("Nom du fichier", "Screenshot" + time_stamp);
+        string filePath = directory.getPath() + "/" + fileName + ".png";
+        image.save(filePath);
     }
 }
 
@@ -95,6 +101,7 @@ void ImageExpImp::image_import()
         vecImage.push_back(img);
     }
 }
+
 void ImageExpImp::GUI_image_setup()
 {
     importeGui.setup("Images");
@@ -129,14 +136,9 @@ void ImageExpImp::GUI_image_setup()
     exportPartie.setup("Exporter une zone de l'ecran");
     exportPartie.addListener(this, &ImageExpImp::exportPartie_button_pressed);
 
-    fileName.set("Nom du nouveau fichier");
-
-    export_img.add(fileName);
     export_img.add(&exporte);
     export_img.add(&exportPartie);
-    // gui add
     importeGui.add(&import_img);
-
     importeGui.add(&export_img);
 }
 
@@ -152,7 +154,7 @@ void ImageExpImp::exporte_button_pressed()
 
 void ImageExpImp::exportPartie_button_pressed()
 {
-    is_mouse_button_pressed = true;
+    zoneExportingInProgress = true;
 }
 
 ofxBaseGui * ImageExpImp::getUi(){

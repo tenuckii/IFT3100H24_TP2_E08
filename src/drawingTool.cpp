@@ -87,7 +87,7 @@ void DrawingTool::draw() {
 		gui.draw();
 
 	// Cannot draw when menu is minimized
-	if (gui.isMinimized() && !gui.isHeaderEnabled())
+	if (gui.isMinimized() == 1)
 		currentPrimitiveType = PrimitiveType::NONE;
 }
 
