@@ -24,20 +24,13 @@ void Geometrie::ajouter_une_primitive_3d(TypePrimitive3d type3d)
 	primitive3d.rotationy = rotationY;
 	primitive3d.rotationz = rotationZ;
 
-
 	primitive_geometrique.push_back(primitive3d);
 	redo.clear();
 }
 
 void Geometrie::setup()
 {
-
-	
 	Gui3d_Setup();
-
-
-	
-
 }
 	
 void Geometrie::draw() {
@@ -66,7 +59,7 @@ void Geometrie::draw() {
 			break;
 
 		case TypePrimitive3d::cube:
-			Draw_cube(primitive_geometrique[i].color, position, primitive_geometrique[i].rayon);
+			Draw_cube(primitive_geometrique[i].color, position, primitive_geometrique[i].scaleX * 100, primitive_geometrique[i].scaleY * 100, primitive_geometrique[i].scaleZ * 100);
 			break;
 		
 			
@@ -112,23 +105,30 @@ void Geometrie::draw() {
 
 void Geometrie::Gui3d_Setup()
 {
-	
-
-	Gui3d.setup("3D");
+	Gui3d.setup("Objets 3D");
 
 	Gui3d.setDefaultWidth(270);
 	Gui3d.setDefaultHeight(20);
 	Gui3d.setSize(270, 200);
 
-
-	primitive3d.setup();
-	Model3D.setup();
-
-	PositionX.set("x position", 0, -ofGetWidth()/2, ofGetWidth()/2);
-	PositionY.set("y position", 0, -ofGetHeight() / 2, 600);
-	PositionZ.set("z position", 0, 0, 1000);
+	PositionX.set("Position en X", 0, -ofGetWidth()/2, ofGetWidth()/2);
+	PositionY.set("Position en Y", 0, -ofGetHeight() / 2, 600);
+	PositionZ.set("Position en Z", 0, 0, 1000);
 	
 	Angle.set("Angle", 0, 0, 360);
+
+	rationX.setup("Changer l'angle en x", false);
+	rationX.addListener(this, &Geometrie::RationX_button_presse);
+
+	rationY.setup("Changer l'angle en y", true);
+	rationY.addListener(this, &Geometrie::RationY_button_presse);
+
+	rationZ.setup("Changer l'angle en z", false);
+	rationZ.addListener(this, &Geometrie::RationZ_button_presse);
+
+	ScaleX.set("Proportion en X", 1, 0.1, 5);
+	ScaleY.set("Proportion en Y", 1, 0.1, 5);
+	ScaleZ.set("Proportion en Z", 1, 0.1, 5);
 
 	Rayon.set("Rayon", 100, 0, 1000); 
 	couleur.set("couleur du trait", ofColor(255), ofColor(0, 0), ofColor(255, 255));
@@ -139,10 +139,10 @@ void Geometrie::Gui3d_Setup()
 	cube_button.setup("Cube");
 	cube_button.addListener(this, &Geometrie::cube_button_presse);
 
-	undo_button.setup("undo");
+	undo_button.setup("Undo");
 	undo_button.addListener(this, &Geometrie::undo_button_presse);
 
-	redo_button.setup("redo");
+	redo_button.setup("Redo");
 	redo_button.addListener(this, &Geometrie::redo_button_presse);
 
 	clear_button.setup("Clear");
@@ -157,60 +157,36 @@ void Geometrie::Gui3d_Setup()
 	Add_F1.setup("F1");
 	Add_F1.addListener(this, &Geometrie::F1_button_presse); 
 
-	rationX.setup("Ratation en x",false);
-	rationX.addListener(this, &Geometrie::RationX_button_presse);
+	Gui3d.add(&cube_button);
+	Gui3d.add(&sphere_button);
+	Gui3d.add(&Add_Human);
+	Gui3d.add(&Add_Dino);
+	Gui3d.add(&Add_F1);
 
-	rationY.setup("Ratation en Y",true);
-	rationY.addListener(this, &Geometrie::RationY_button_presse);
+	Gui3d.add(couleur);
 
-	rationZ.setup("Ratation en Z",false);
-	rationZ.addListener(this, &Geometrie::RationZ_button_presse);
+	Gui3d.add(PositionX);
+	Gui3d.add(PositionY);
+	Gui3d.add(PositionZ);
 
+	Gui3d.add(Angle);
+	Gui3d.add(&rationX);
+	Gui3d.add(&rationY);
+	Gui3d.add(&rationZ);
 
-	ScaleX.set("scale en x", 1, 0.1 ,5);
-	ScaleY.set("scale en y", 1, 0.1, 5);
-	ScaleZ.set("scale en z", 1, 0.1, 5);
+	Gui3d.add(Rayon);
+	Gui3d.add(ScaleX);
+	Gui3d.add(ScaleY);
+	Gui3d.add(ScaleZ);
 
+	Gui3d.add(&undo_button);
+	Gui3d.add(&redo_button);
+	Gui3d.add(&clear_button);
 
 	//model
 	Human.load("Human.obj");
 	Dino.load("T-Rex.obj");
 	F1.load("F1.obj");
-
-	
-
-	primitive3d.add(PositionX);
-	primitive3d.add(PositionY);
-	primitive3d.add(PositionZ);
-	primitive3d.add(Rayon);
-	primitive3d.add(couleur);
-
-	
-	
-
-	primitive3d.add(&cube_button);
-	primitive3d.add(&sphere_button);
-	primitive3d.add(&undo_button);
-	primitive3d.add(&redo_button);
-	primitive3d.add(&clear_button);
-
-	Model3D.add(Angle);
-	Model3D.add(ScaleX);
-	Model3D.add(ScaleY);
-	Model3D.add(ScaleZ);
-	Model3D.add(&Add_Human);
-	Model3D.add(&Add_Dino);
-	Model3D.add(&Add_F1);
-	Model3D.add(&rationX);
-	Model3D.add(&rationY);
-	Model3D.add(&rationZ);
-
-	
-	Gui3d.add(&primitive3d);
-	Gui3d.add(&Model3D);
-
-
-
 }
 
 void Geometrie::sphere_button_presse()
@@ -320,12 +296,12 @@ void Geometrie::clear()
 	
 }
 
-void Geometrie::Draw_cube(ofColor p_color, ofVec3f position, float rayon) const
+void Geometrie::Draw_cube(ofColor p_color, ofVec3f position, float width, float height, float depth) const
 {
 	ofNoFill();
 	ofSetColor(p_color);
 
-	ofDrawBox(position, rayon);
+	ofDrawBox(position, width, height, depth);
 }
 
 void Geometrie::Draw_sphere(ofColor p_color, ofVec3f position, float rayon) const
