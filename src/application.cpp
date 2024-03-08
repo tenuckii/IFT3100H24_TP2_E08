@@ -12,6 +12,7 @@ void Application::setup()
 
     // keep last
     interface.setup(&cursor, &drawingTool, &imageExpImp, &geometrie3D);
+    selectionMode = false;
 }
 
 //--------------------------------------------------------------
@@ -57,6 +58,10 @@ void Application::keyReleased(int key)
     // exporter/importer
     switch (key)
     {
+       
+       case 's':
+           selectionMode = true;
+           break;
     case '2':
         mode = VIEW_2D;
         mode_change = true;
@@ -94,11 +99,16 @@ void Application::mouseDragged(int x, int y, int button)
 }
 
 //--------------------------------------------------------------
-void Application::mousePressed(int x, int y, int button)
-{
-    cursor.set_position(x, y);
+void Application::mousePressed(int x, int y, int button){
 
-    renderer.setMousePressStatus(true);
+    cursor.set_position(x,y);
+    if(selectionMode)
+    {   
+        renderer.SelectChecker(x,y);
+
+    }
+    else { 
+        renderer.setMousePressStatus(true);
     renderer.setMousePosition(x, y);
     renderer.setMouseClickPosition(x, y);
     imageExpImp.mouse_press_y = y;
