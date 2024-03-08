@@ -3,7 +3,9 @@
 *.code-workspace
 
 # bin
-/bin
+/bin/*.dll
+/bin/*.exe
+/bin/*.pdb
 
 # obj
 /obj
