@@ -49,6 +49,8 @@ public:
 	ofParameter<float> Rayon;
 
 	ofParameter<ofColor> couleur;
+
+
 	ofxButton sphere_button;
 	ofxButton cube_button;
 
@@ -68,6 +70,7 @@ public:
 	ofParameter<float> ScaleY;
 	ofParameter<float> ScaleZ;
 
+	ofParameter<int> nb_cam2;
 
 	bool gui3d_afficher = false;
 
@@ -75,6 +78,7 @@ public:
 
 	ofxGuiGroup primitive3d;
 	ofxGuiGroup Model3D;
+	ofxGuiGroup Camera;
 
 	ofLight light;
 
@@ -113,8 +117,6 @@ public:
 	void Draw_Modele(float angle, ofVec3f position, ofxAssimpModelLoader &model, float rotax, float rotay, float roatz, float scalex, float scaley, float scalez) const;
 	void Draw_dernier_Modele(ofVec3f position, ofxAssimpModelLoader& model);
 
-	
-	
 
 	//modele 3d
 	ofxAssimpModelLoader Human;

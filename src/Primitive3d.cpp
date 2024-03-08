@@ -44,8 +44,8 @@ void Geometrie::draw() {
 
 	ofEnableLighting();
 	
-	light.setAmbientColor(ofColor(0, 255, 0));
-	light.setDiffuseColor(ofColor(255, 255, 255));
+	light.setAmbientColor(ofColor(255, 255, 255));
+	light.setDiffuseColor(ofColor(0, 0, 0));
 	light.setPosition(ofGetWindowWidth() / 2, 0.0f, 1000.0f);
 	light.enable();
 	int x = 0;
@@ -177,7 +177,11 @@ void Geometrie::Gui3d_Setup()
 	Dino.load("T-Rex.obj");
 	F1.load("F1.obj");
 
-	
+	//cam
+	Camera.setup("Camera");
+	nb_cam2.set("Nb de camera", 1, 1, 4);
+
+	Camera.add(nb_cam2);
 
 	primitive3d.add(PositionX);
 	primitive3d.add(PositionY);
@@ -208,7 +212,7 @@ void Geometrie::Gui3d_Setup()
 	
 	Gui3d.add(&primitive3d);
 	Gui3d.add(&Model3D);
-
+	Gui3d.add(&Camera);
 
 
 }
@@ -341,7 +345,8 @@ void Geometrie::Draw_Modele(float angle, ofVec3f position, ofxAssimpModelLoader&
 	model.setRotation(0, angle, rotax, rotay, roatz);
 	model.setScale(scalex, scaley, scalez);
 	model.draw(OF_MESH_WIREFRAME);
-	
+
+	model.getNumMeshes();
 }
 
 void Geometrie::Draw_dernier_Modele(ofVec3f position, ofxAssimpModelLoader& model) 
@@ -359,7 +364,7 @@ void Geometrie::Draw_dernier_Modele(ofVec3f position, ofxAssimpModelLoader& mode
 	primitive_geometrique.back().scaleX = ScaleX;
 	primitive_geometrique.back().scaleY = ScaleY;
 	primitive_geometrique.back().scaleZ = ScaleZ;
-
+	
 
 
 	primitive_geometrique.back().angle = Angle;

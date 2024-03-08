@@ -35,6 +35,10 @@ public:
     void dragEvent(ofDragInfo dragInfo);
     void gotMessage(ofMessage msg);
 
+    float mainCam[4];
+    float cameraTop[4];
+    float cameraDroit[4];
+    float cameraGauche[4];
 private:
     Cursor cursor;
     DrawingTool drawingTool;
@@ -43,4 +47,13 @@ private:
 
     Mode mode;
     bool mode_change;
+    ofEasyCam camera;
+    ofEasyCam camTop;
+    ofEasyCam camDroit;
+    ofEasyCam camGauche;
+    ofVec2f lastMouse;
+    ofVec3f rotationPoint;
+
+    int choix_de_cam;
+    int choisirCamABouger(int x, int y);
 };
