@@ -469,7 +469,7 @@ float Renderer::distanceBetweenTwoPoints(float x1, float y1, float x2, float y2)
 bool Renderer::SelectChecker(int mouse_x, int mouse_y)
 {
 	int rectangleLenght = 0;
-	int jeu_arbitraire = 20;
+	int jeu_arbitraire = 5;
 	int rectangleWith = 0;
 	float v1_x = 0.0;
 	float v1_y = 0.0;
@@ -515,7 +515,7 @@ bool Renderer::SelectChecker(int mouse_x, int mouse_y)
 				borigine = forme->start_pos[1] - pente * forme->start_pos[0];
 				if ((mouse_y - jeu_arbitraire) < (pente * mouse_x + borigine) && (mouse_y + jeu_arbitraire) > (pente * mouse_x + borigine)
 					&& mouse_x > forme->start_pos[0] && mouse_x < forme->end_pos[0]) {
-					forme->selectionner = true;
+					forme->selectionner = !forme->selectionner;
 					return true;
 				}
 			
@@ -552,10 +552,11 @@ bool Renderer::SelectChecker(int mouse_x, int mouse_y)
 			 a3 = glm::orientedAngle(v3, v1, glm::vec3(0, 0, 1));
 			 if (a1 < 0 && a2 < 0 && a3 < 0)
 			 {
-				 return true;
 				 forme->selectionner = !forme->selectionner;
+				 return true;
+				 
 			 }
-			else return false;
+			else 
 
 			break;
 		case PrimitiveType::CIRCLE:
@@ -567,6 +568,7 @@ bool Renderer::SelectChecker(int mouse_x, int mouse_y)
 		}
 	
 	}
+	return false;
 }
 
 Renderer::~Renderer()
