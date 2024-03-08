@@ -28,6 +28,7 @@ void Interface::draw(Mode mode, bool &mode_change)
             gui.add(image_import_export->getUi());
             break;
         case Mode::VIEW_3D:
+            gui.add(cursor->getUi());
             drawing_tool->setNoneType();
             gui.add(Geometrie3D->getUi());
             break;
