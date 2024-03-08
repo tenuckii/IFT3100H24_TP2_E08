@@ -8,7 +8,7 @@
 #   The location of your root openFrameworks installation
 #       (default) OF_ROOT = ../../.. 
 ################################################################################
-OF_ROOT = D:/stokage/of_v0.12.0_vs_release
+OF_ROOT = ../../..
 
 ################################################################################
 # PROJECT ROOT
