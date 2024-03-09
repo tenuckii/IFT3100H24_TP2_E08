@@ -91,36 +91,12 @@ void Geometrie::draw() {
 
 		case TypePrimitive3d::f1:
 			Draw_Modele(primitive_geometrique[i].angle, position, F1, primitive_geometrique[i].rotationx, primitive_geometrique[i].rotationy, primitive_geometrique[i].rotationz, primitive_geometrique[i].scaleX, primitive_geometrique[i].scaleY, primitive_geometrique[i].scaleZ);
-			fct4_1slaty(F1, position);
 			if (primitive_geometrique[i].selctionner)
 			{
 				Draw_Modele_slectionner(position, F1, i);
 			}
 			break;
 		}
-	}
-/*
-	if (!primitive_geometrique.empty()) {
-		ofVec3f position(primitive_geometrique.back().x, primitive_geometrique.back().y, primitive_geometrique.back().z);
-		switch (primitive_geometrique.back().type3d) {
-
-		case TypePrimitive3d::human:
-			Draw_dernier_Modele(position, Human);
-			break;
-
-		case TypePrimitive3d::dino:
-			Draw_dernier_Modele(position, Dino);
-			break;
-
-		case TypePrimitive3d::f1:
-			Draw_dernier_Modele(position, F1);
-			break;
-		}
-	}
-	*/
-	if (gui3d_afficher)
-	{
-		Gui3d.draw();
 	}
 }
 
@@ -405,33 +381,6 @@ void Geometrie::Draw_Modele(float angle, ofVec3f position, ofxAssimpModelLoader&
 	model.getNumMeshes();
 }
 
-/*void Geometrie::Draw_dernier_Modele(ofVec3f position, ofxAssimpModelLoader& model)
-{
-	model.setPosition(position.x, position.y, position.z);
-	model.setRotation(0, Angle, rotationX, rotationY, rotationZ);
-	model.setPosition(ofGetWindowWidth() / 2 + PositionX, ofGetWindowHeight() / 2 + PositionY, -PositionZ);
-
-	model.setScale(ScaleX, ScaleY, ScaleZ);
-
-	primitive_geometrique.back().x = ofGetWindowWidth() / 2 + PositionX;
-	primitive_geometrique.back().y = ofGetWindowHeight() / 2 + PositionY;
-	primitive_geometrique.back().z = -PositionZ;
-
-	primitive_geometrique.back().scaleX = ScaleX;
-	primitive_geometrique.back().scaleY = ScaleY;
-	primitive_geometrique.back().scaleZ = ScaleZ;
-	
-
-
-	primitive_geometrique.back().angle = Angle;
-
-	primitive_geometrique.back().rotationx = rotationX;
-	primitive_geometrique.back().rotationy = rotationY;
-	primitive_geometrique.back().rotationz = rotationZ;
-	
-	model.draw(OF_MESH_WIREFRAME);
-}
-*/
 
 void Geometrie::Draw_Modele_slectionner(ofVec3f position, ofxAssimpModelLoader& model, int index)
 {
@@ -500,37 +449,6 @@ void Geometrie::Draw_primitive_slectionner(ofVec3f position, int index, TypePrim
 	regarde_un_objet[2] = primitive_geometrique[index].z;
 
 
-}
-
-void Geometrie::fct4_1slaty(ofxAssimpModelLoader& model, ofVec3f position)
-{
-
-	float xmin = model.getMesh(0).getVertex(0).x;
-	float xmax = xmin;
-	float ymin = model.getMesh(0).getVertex(0).y;
-	float ymax = ymin;
-	float zmin = model.getMesh(0).getVertex(0).z;
-	float zmax = zmin;
-
-	// Parcourir tous les vertices de tous les meshes du modèle
-	for (int i = 0; i < model.getNumMeshes(); ++i) {
-		ofMesh& mesh = model.getMesh(i);
-		for (int j = 0; j < mesh.getNumVertices(); ++j) {
-			const ofVec3f& vertex = mesh.getVertex(j);
-			// Mettre à jour les valeurs min et max
-			if (vertex.x < xmin) xmin = vertex.x;
-			if (vertex.x > xmax) xmax = vertex.x;
-			if (vertex.y < ymin) ymin = vertex.y;
-			if (vertex.y > ymax) ymax = vertex.y;
-			if (vertex.z < zmin) zmin = vertex.z;
-			if (vertex.z > zmax) zmax = vertex.z;
-		}
-	}
-	ofNoFill();
-	float width = xmax - xmin;
-	float height = ymax - ymin;
-	float depth = zmax - zmin;
-	ofDrawBox(position.x, position.y, position.z, width, height, depth);
 }
 
 

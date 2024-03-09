@@ -82,11 +82,6 @@ void DrawingTool::exit()
 }
 
 void DrawingTool::draw() {
-	
-	if (show_menu)
-		gui.draw();
-
-	// Cannot draw when menu is minimized
 	if (gui.isMinimized() == 1)
 		currentPrimitiveType = PrimitiveType::NONE;
 }

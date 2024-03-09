@@ -128,12 +128,9 @@ public:
 	void Draw_cube(ofColor p_color, ofVec3f position, float width, float height, float depth) const;
 	void Draw_sphere(ofColor p_color, ofVec3f position, float rayon) const;
 	void Draw_Modele(float angle, ofVec3f position, ofxAssimpModelLoader &model, float rotax, float rotay, float roatz, float scalex, float scaley, float scalez) const;
-	void Draw_dernier_Modele(ofVec3f position, ofxAssimpModelLoader& model);
 	void Draw_Modele_slectionner(ofVec3f position, ofxAssimpModelLoader& model, int index);
 
 	void Draw_primitive_slectionner(ofVec3f position, int index, TypePrimitive3d type);
-
-	void fct4_1slaty(ofxAssimpModelLoader& model, ofVec3f position);
 
 
 	//modele 3d
