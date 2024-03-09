@@ -29,6 +29,9 @@ struct Primitive3d
 	float rotationy;
 	float rotationz;
 
+	int index = 0;
+	bool selctionner = false;
+
 
 	ofColor color;
 	TypePrimitive3d type3d;
@@ -70,9 +73,17 @@ public:
 	ofParameter<float> ScaleY;
 	ofParameter<float> ScaleZ;
 
+	ofParameter<int> Index_selection;
+	ofxButton selection;
+	glm::vec3 regarde_un_objet;
+
+
 	ofParameter<int> nb_cam2;
 
 	bool gui3d_afficher = false;
+
+	int Index = -1;
+	int autreIndex = 0;
 
 	ofxPanel Gui3d;
 
@@ -103,6 +114,8 @@ public:
 	void redo_button_presse();
 	void clear_button_presse();
 
+	void selectionner_button();
+
 	void RationX_button_presse(bool& value);
 	void RationY_button_presse(bool& value);
 	void RationZ_button_presse(bool& value);
@@ -116,6 +129,11 @@ public:
 	void Draw_sphere(ofColor p_color, ofVec3f position, float rayon) const;
 	void Draw_Modele(float angle, ofVec3f position, ofxAssimpModelLoader &model, float rotax, float rotay, float roatz, float scalex, float scaley, float scalez) const;
 	void Draw_dernier_Modele(ofVec3f position, ofxAssimpModelLoader& model);
+	void Draw_Modele_slectionner(ofVec3f position, ofxAssimpModelLoader& model, int index);
+
+	void Draw_primitive_slectionner(ofVec3f position, int index, TypePrimitive3d type);
+
+	void fct4_1slaty(ofxAssimpModelLoader& model, ofVec3f position);
 
 
 	//modele 3d

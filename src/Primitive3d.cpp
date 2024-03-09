@@ -3,6 +3,8 @@
 void Geometrie::ajouter_une_primitive_3d(TypePrimitive3d type3d)
 {
 	Primitive3d primitive3d;
+	Index++;
+	primitive3d.index = Index;
 
 	primitive3d.type3d = type3d;
 
@@ -26,6 +28,11 @@ void Geometrie::ajouter_une_primitive_3d(TypePrimitive3d type3d)
 
 	primitive_geometrique.push_back(primitive3d);
 	redo.clear();
+
+
+
+	Index_selection.set("Index", Index_selection, 0, Index);
+
 }
 
 void Geometrie::setup()
@@ -41,14 +48,8 @@ void Geometrie::draw() {
 	light.setDiffuseColor(ofColor(0, 0, 0));
 	light.setPosition(ofGetWindowWidth() / 2, 0.0f, 1000.0f);
 	light.enable();
-	int x = 0;
-	if (!primitive_geometrique.empty()) {
-		if (primitive_geometrique.back().type3d == human || primitive_geometrique.back().type3d == f1 || primitive_geometrique.back().type3d == dino)
-		{
-			x = 1;
-		}
-	}
-	for (int i = 0; i < primitive_geometrique.size()-x; i++) {
+
+	for (int i = 0; i < primitive_geometrique.size(); i++) {
 		
 		ofVec3f position(primitive_geometrique[i].x, primitive_geometrique[i].y, primitive_geometrique[i].z);
 
@@ -56,27 +57,49 @@ void Geometrie::draw() {
 		{
 		case TypePrimitive3d::Sphere:
 			Draw_sphere(primitive_geometrique[i].color, position, primitive_geometrique[i].rayon);
+
+			if (primitive_geometrique[i].selctionner)
+			{
+				Draw_primitive_slectionner(position,i,Sphere);
+			}
 			break;
 
 		case TypePrimitive3d::cube:
 			Draw_cube(primitive_geometrique[i].color, position, primitive_geometrique[i].scaleX * 100, primitive_geometrique[i].scaleY * 100, primitive_geometrique[i].scaleZ * 100);
+			if (primitive_geometrique[i].selctionner)
+			{
+				Draw_primitive_slectionner(position, i, cube);
+			}
 			break;
 		
 			
 		case TypePrimitive3d::human:
 			Draw_Modele(primitive_geometrique[i].angle, position, Human, primitive_geometrique[i].rotationx, primitive_geometrique[i].rotationy, primitive_geometrique[i].rotationz, primitive_geometrique[i].scaleX, primitive_geometrique[i].scaleY, primitive_geometrique[i].scaleZ);
+			if (primitive_geometrique[i].selctionner)
+			{
+				Draw_Modele_slectionner(position, Human, i);
+			}
 			break;
 
 		case TypePrimitive3d::dino:
 			Draw_Modele(primitive_geometrique[i].angle, position, Dino, primitive_geometrique[i].rotationx, primitive_geometrique[i].rotationy, primitive_geometrique[i].rotationz, primitive_geometrique[i].scaleX, primitive_geometrique[i].scaleY, primitive_geometrique[i].scaleZ);
+			if (primitive_geometrique[i].selctionner)
+			{
+				Draw_Modele_slectionner(position, Dino, i);
+			}
 			break;
 
 		case TypePrimitive3d::f1:
 			Draw_Modele(primitive_geometrique[i].angle, position, F1, primitive_geometrique[i].rotationx, primitive_geometrique[i].rotationy, primitive_geometrique[i].rotationz, primitive_geometrique[i].scaleX, primitive_geometrique[i].scaleY, primitive_geometrique[i].scaleZ);
-			
+			fct4_1slaty(F1, position);
+			if (primitive_geometrique[i].selctionner)
+			{
+				Draw_Modele_slectionner(position, F1, i);
+			}
+			break;
 		}
 	}
-
+/*
 	if (!primitive_geometrique.empty()) {
 		ofVec3f position(primitive_geometrique.back().x, primitive_geometrique.back().y, primitive_geometrique.back().z);
 		switch (primitive_geometrique.back().type3d) {
@@ -94,7 +117,7 @@ void Geometrie::draw() {
 			break;
 		}
 	}
-	
+	*/
 	if (gui3d_afficher)
 	{
 		Gui3d.draw();
@@ -132,6 +155,11 @@ void Geometrie::Gui3d_Setup()
 
 	Rayon.set("Rayon", 100, 0, 1000); 
 	couleur.set("couleur du trait", ofColor(255), ofColor(0, 0), ofColor(255, 255));
+
+	Index_selection.set("Index", 0, 0, Index);
+
+	selection.setup("Selectionner");
+	selection.addListener(this, &Geometrie::selectionner_button);
 
 	sphere_button.setup("Sphere");
 	sphere_button.addListener(this, &Geometrie::sphere_button_presse);
@@ -183,6 +211,14 @@ void Geometrie::Gui3d_Setup()
 	Gui3d.add(&redo_button);
 	Gui3d.add(&clear_button);
 
+
+
+	Gui3d.add(Index_selection);
+	Gui3d.add(&selection);
+
+
+
+
 	//model
 	Human.load("Human.obj");
 	Dino.load("T-Rex.obj");
@@ -194,35 +230,6 @@ void Geometrie::Gui3d_Setup()
 
 	Camera.add(nb_cam2);
 
-	primitive3d.add(PositionX);
-	primitive3d.add(PositionY);
-	primitive3d.add(PositionZ);
-	primitive3d.add(Rayon);
-	primitive3d.add(couleur);
-
-	
-	
-
-	primitive3d.add(&cube_button);
-	primitive3d.add(&sphere_button);
-	primitive3d.add(&undo_button);
-	primitive3d.add(&redo_button);
-	primitive3d.add(&clear_button);
-
-	Model3D.add(Angle);
-	Model3D.add(ScaleX);
-	Model3D.add(ScaleY);
-	Model3D.add(ScaleZ);
-	Model3D.add(&Add_Human);
-	Model3D.add(&Add_Dino);
-	Model3D.add(&Add_F1);
-	Model3D.add(&rationX);
-	Model3D.add(&rationY);
-	Model3D.add(&rationZ);
-
-	
-	Gui3d.add(&primitive3d);
-	Gui3d.add(&Model3D);
 	Gui3d.add(&Camera);
 
 
@@ -230,11 +237,19 @@ void Geometrie::Gui3d_Setup()
 
 void Geometrie::sphere_button_presse()
 {
+	for (int i = 0; i < primitive_geometrique.size(); i++)
+	{
+		primitive_geometrique[i].selctionner = false;
+	}
 	ajouter_une_primitive_3d(Sphere);
 }
 
 void Geometrie::cube_button_presse()
 {
+	for (int i = 0; i < primitive_geometrique.size(); i++)
+	{
+		primitive_geometrique[i].selctionner = false;
+	}
 	ajouter_une_primitive_3d(cube);
 }
 
@@ -242,16 +257,28 @@ void Geometrie::cube_button_presse()
 
 void Geometrie::Human_button_presse()
 {
+	for (int i = 0; i < primitive_geometrique.size(); i++)
+	{
+		primitive_geometrique[i].selctionner = false;
+	}
 	ajouter_une_primitive_3d(human);
 }
 
 void Geometrie::Dino_button_presse()
 {
+	for (int i = 0; i < primitive_geometrique.size(); i++)
+	{
+		primitive_geometrique[i].selctionner = false;
+	}
 	ajouter_une_primitive_3d(dino);
 }
 
 void Geometrie::F1_button_presse()
 {
+	for (int i = 0; i < primitive_geometrique.size(); i++)
+	{
+		primitive_geometrique[i].selctionner = false;
+	}
 	ajouter_une_primitive_3d(f1);
 }
 
@@ -270,6 +297,21 @@ void Geometrie::redo_button_presse()
 void Geometrie::clear_button_presse()
 {
 	clear();
+	
+}
+
+void Geometrie::selectionner_button()
+{
+	autreIndex = Index_selection;
+	for (int i = 0; i < primitive_geometrique.size(); i++)
+	{
+		primitive_geometrique[i].selctionner = false;
+	}
+	primitive_geometrique[autreIndex].selctionner = true;
+
+	regarde_un_objet[0] = primitive_geometrique[autreIndex].x;
+	regarde_un_objet[1] = primitive_geometrique[autreIndex].y;
+	regarde_un_objet[2] = primitive_geometrique[autreIndex].z;
 }
 
 
@@ -310,6 +352,7 @@ void Geometrie::RationZ_button_presse(bool& value)
 
 void Geometrie::undo()
 {
+	Index--;
 	if (!primitive_geometrique.empty())
 	{
 		Primitive3d undoPrimitive = primitive_geometrique.back();
@@ -320,6 +363,7 @@ void Geometrie::undo()
 
 void Geometrie::redo3d()
 {
+	Index++;
 	if (!redo.empty())
 	{
 		Primitive3d redoPrimitive = redo.back();
@@ -332,6 +376,7 @@ void Geometrie::redo3d()
 void Geometrie::clear()
 {
 	primitive_geometrique.clear();
+	Index = -1;
 	
 }
 
@@ -355,12 +400,12 @@ void Geometrie::Draw_Modele(float angle, ofVec3f position, ofxAssimpModelLoader&
 	model.setPosition(position.x, position.y, position.z);
 	model.setRotation(0, angle, rotax, rotay, roatz);
 	model.setScale(scalex, scaley, scalez);
-	model.draw(OF_MESH_WIREFRAME);
+	model.draw(OF_MESH_FILL);
 
 	model.getNumMeshes();
 }
 
-void Geometrie::Draw_dernier_Modele(ofVec3f position, ofxAssimpModelLoader& model) 
+/*void Geometrie::Draw_dernier_Modele(ofVec3f position, ofxAssimpModelLoader& model)
 {
 	model.setPosition(position.x, position.y, position.z);
 	model.setRotation(0, Angle, rotationX, rotationY, rotationZ);
@@ -386,7 +431,107 @@ void Geometrie::Draw_dernier_Modele(ofVec3f position, ofxAssimpModelLoader& mode
 	
 	model.draw(OF_MESH_WIREFRAME);
 }
+*/
 
+void Geometrie::Draw_Modele_slectionner(ofVec3f position, ofxAssimpModelLoader& model, int index)
+{
+
+	model.setPosition(position.x, position.y, position.z);
+	model.setRotation(0, Angle, rotationX, rotationY, rotationZ);
+	model.setPosition(ofGetWindowWidth() / 2 + PositionX, ofGetWindowHeight() / 2 + PositionY, -PositionZ);
+
+	model.setScale(ScaleX, ScaleY, ScaleZ);
+
+	primitive_geometrique[index].x = ofGetWindowWidth() / 2 + PositionX;
+	primitive_geometrique[index].y = ofGetWindowHeight() / 2 + PositionY;
+	primitive_geometrique[index].z = -PositionZ;
+
+	primitive_geometrique[index].scaleX = ScaleX;
+	primitive_geometrique[index].scaleY = ScaleY;
+	primitive_geometrique[index].scaleZ = ScaleZ;
+
+
+
+	primitive_geometrique[index].angle = Angle;
+
+	primitive_geometrique[index].rotationx = rotationX;
+	primitive_geometrique[index].rotationy = rotationY;
+	primitive_geometrique[index].rotationz = rotationZ;
+
+	regarde_un_objet[0] = primitive_geometrique[index].x;
+	regarde_un_objet[1] = primitive_geometrique[index].y;
+	regarde_un_objet[2] = primitive_geometrique[index].z;
+
+	model.draw(OF_MESH_FILL);
+}
+
+
+void Geometrie::Draw_primitive_slectionner(ofVec3f position, int index, TypePrimitive3d type)
+{
+
+
+
+	primitive_geometrique[index].x = ofGetWindowWidth() / 2 + PositionX;
+	primitive_geometrique[index].y = ofGetWindowHeight() / 2 + PositionY;
+	primitive_geometrique[index].z = -PositionZ;
+
+
+	primitive_geometrique[index].rayon = Rayon;
+
+	primitive_geometrique[index].color = couleur;
+
+	switch (type)
+	{
+	case Sphere:
+		ofDrawSphere(primitive_geometrique[index].x, primitive_geometrique[index].y, primitive_geometrique[index].z, primitive_geometrique[index].rayon);
+		break;
+	case cube:
+		ofDrawBox(primitive_geometrique[index].x, primitive_geometrique[index].y, primitive_geometrique[index].z, primitive_geometrique[index].rayon);
+		break;
+	
+	
+	}
+
+	ofDrawSphere(primitive_geometrique[index].x, primitive_geometrique[index].y, primitive_geometrique[index].z, primitive_geometrique[index].rayon);
+
+
+	regarde_un_objet[0] = primitive_geometrique[index].x;
+	regarde_un_objet[1] = primitive_geometrique[index].y;
+	regarde_un_objet[2] = primitive_geometrique[index].z;
+
+
+}
+
+void Geometrie::fct4_1slaty(ofxAssimpModelLoader& model, ofVec3f position)
+{
+
+	float xmin = model.getMesh(0).getVertex(0).x;
+	float xmax = xmin;
+	float ymin = model.getMesh(0).getVertex(0).y;
+	float ymax = ymin;
+	float zmin = model.getMesh(0).getVertex(0).z;
+	float zmax = zmin;
+
+	// Parcourir tous les vertices de tous les meshes du modèle
+	for (int i = 0; i < model.getNumMeshes(); ++i) {
+		ofMesh& mesh = model.getMesh(i);
+		for (int j = 0; j < mesh.getNumVertices(); ++j) {
+			const ofVec3f& vertex = mesh.getVertex(j);
+			// Mettre à jour les valeurs min et max
+			if (vertex.x < xmin) xmin = vertex.x;
+			if (vertex.x > xmax) xmax = vertex.x;
+			if (vertex.y < ymin) ymin = vertex.y;
+			if (vertex.y > ymax) ymax = vertex.y;
+			if (vertex.z < zmin) zmin = vertex.z;
+			if (vertex.z > zmax) zmax = vertex.z;
+		}
+	}
+	ofNoFill();
+	float width = xmax - xmin;
+	float height = ymax - ymin;
+	float depth = zmax - zmin;
+	ofDrawBox(position.x, position.y, position.z, width, height, depth);
+}
 
 
 ofxBaseGui * Geometrie::getUi(){

@@ -215,7 +215,7 @@ void Application::keyPressed(int key)
 //--------------------------------------------------------------
 void Application::keyReleased(int key)
 {
-
+    glm::vec3 upVector(0, -1, 0);
     // exporter/importer
     switch (key)
     {
@@ -231,6 +231,8 @@ void Application::keyReleased(int key)
         mode = VIEW_3D;
         mode_change = true;
         break;
+    case 'f':
+        camera.lookAt(geometrie3D.regarde_un_objet, upVector);
     }
 }
 
