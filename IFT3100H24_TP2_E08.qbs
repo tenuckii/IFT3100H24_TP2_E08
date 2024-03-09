@@ -15,6 +15,21 @@ Project{
             'src/main.cpp',
             'src/ofApp.cpp',
             'src/ofApp.h',
+            'src\ImageExpImp.cpp',
+            'src\ImageExpImp.h',
+            'src\Primitive3d.cpp',
+            'src\Primitive3d.h',
+            'src\application.cpp',
+            'src\application.h',
+            'src\cursor.cpp',
+            'src\cursor.h',
+            'src\drawingTool.cpp',
+            'src\drawingTool.h',
+            'src\interface.cpp',
+            'src\interface.h',
+            'src\main.cpp',
+            'src\renderer.cpp',
+            'src\renderer.h',
         ]
 
         of.addons: [

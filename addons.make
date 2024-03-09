@@ -1,2 +1,4 @@
 ofxAssimpModelLoader
+ofxAssimpModelLoader
+ofxGui
 ofxGui

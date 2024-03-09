@@ -212,7 +212,7 @@ void Renderer::drawPrimitive(Primitive primitive)
 	float window_2_start_y = primitive.start_pos[1] + height / 2;
 	float window_width = width / 5;
 	float window_height = height / 3;
-
+    
 	switch (primitive.type)
 	{
 	case PrimitiveType::LINE:
@@ -484,7 +484,7 @@ bool Renderer::SelectChecker(int mouse_x, int mouse_y)
 		glm::vec3 v2;
 		glm::vec3 v3;
 
-	for each (auto forme in DrawMatrice)
+	for(auto forme : DrawMatrice)
 	{	
 		switch (forme->type)
 		{
