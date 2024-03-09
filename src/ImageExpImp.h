@@ -41,6 +41,7 @@ private :
 	ofxButton import;
 	ofxButton exporte;
 	ofxButton exportPartie;
+	ofxButton echantillon;
 
 	ofxGuiGroup import_img;
 	ofxGuiGroup export_img;
@@ -67,7 +68,8 @@ public:
 	void import_button_pressed();
 	void exporte_button_pressed();
 	void exportPartie_button_pressed();
-
+	void importBroke_button_pressed();
+	ofImage scambler(ofImage image);
 	
 
     ofxBaseGui * getUi();

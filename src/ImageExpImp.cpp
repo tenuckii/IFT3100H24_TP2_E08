@@ -8,6 +8,7 @@ void ImageExpImp::setup()
 
 void ImageExpImp::update()
 {
+
 }
 
 void ImageExpImp::draw()
@@ -119,14 +120,17 @@ void ImageExpImp::GUI_image_setup()
     img_end_y.set("Position de fin en y", 600, 0, ofGetWindowHeight());
     // boutton import
     import.setup("Importer");
-    import.addListener(this, &ImageExpImp::import_button_pressed);
+    import.addListener(this, &ImageExpImp::import_button_pressed);  
+
+    echantillon.setup("Importer avec inversion");
+    echantillon.addListener(this, &ImageExpImp::importBroke_button_pressed);
 
     import_img.add(img_start_x);
     import_img.add(img_start_y);
     import_img.add(img_end_x);
     import_img.add(img_end_y);
     import_img.add(&import);
-
+    import_img.add(&echantillon);
     // export
     export_img.setup("Exportation");
     // boutton export1
@@ -141,11 +145,17 @@ void ImageExpImp::GUI_image_setup()
     importeGui.add(&import_img);
     importeGui.add(&export_img);
 }
+void ImageExpImp::importBroke_button_pressed()
+{
+    image_import();
+    vecImage.back().image = scambler(vecImage.front().image);
+}
 
 void ImageExpImp::import_button_pressed()
 {
     image_import();
 }
+
 
 void ImageExpImp::exporte_button_pressed()
 {
@@ -159,4 +169,30 @@ void ImageExpImp::exportPartie_button_pressed()
 
 ofxBaseGui * ImageExpImp::getUi(){
     return &importeGui;
+}
+
+ofImage ImageExpImp::scambler(ofImage image) {
+
+
+    ofImage trans = image;
+    ofPixels frog = trans.getPixels();
+    int bi = trans.getWidth();
+    int a = trans.getHeight();
+    for (int x = 0; x < bi; x = x + 4)
+    {
+        for (int y = 0; y < a * 3; y++) {
+            int location = y * trans.getWidth() + x;
+
+            char r = frog[location];
+            char g = frog[location + 1];
+            char b = frog[location + 2];
+
+            frog[location] = b;
+            frog[location + 1] = r;
+            frog[location + 2] = g;
+        }
+    }
+    trans.clear();
+    trans.setFromPixels(frog);
+    return trans;
 }
